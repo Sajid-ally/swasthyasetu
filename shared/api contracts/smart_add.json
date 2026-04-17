@@ -1,0 +1,5 @@
+{
+  "type": "routine | medication | family_history",
+  "parsed_data": {},
+  "message": "string"
+}

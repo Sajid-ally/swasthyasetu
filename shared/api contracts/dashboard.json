@@ -1,0 +1,16 @@
+{
+  "user_id": "string",
+  "health_score": {
+    "value": 0,
+    "status": "good | moderate | bad"
+  },
+  "risk_alerts": [
+    {
+      "title": "string",
+      "severity": "low | medium | high",
+      "message": "string"
+    }
+  ],
+  "medications": [],
+  "timeline": []
+}
