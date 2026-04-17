@@ -1,0 +1,58 @@
+{
+    "family_id": "fam_001",
+    "members": [
+        {
+            "id": "user_1",
+            "name": "Nishant Updated",
+            "age": 20,
+            "height_cm": 170,
+            "weight_kg": 70,
+            "diseases": [
+                "diabetes"
+            ],
+            "medications": [
+                "metformin"
+            ],
+            "lifestyle": {
+                "sleep_hours": 4,
+                "exercise": "medium",
+                "smoking": false
+            },
+            "vitals": {
+                "bp": "150/80",
+                "sugar_level": 180
+            },
+            "emergency": {
+                "blood_group": "B+",
+                "allergies": [
+                    "dust"
+                ],
+                "contact": "9876543210"
+            },
+            "access": {
+                "user_2": "full",
+                "user_3": "limited"
+            }
+        },
+        {
+            "id": "user_2",
+            "name": "Father",
+            "age": 48,
+            "diseases": [
+                "bp"
+            ],
+            "access": {
+                "user_1": "full"
+            }
+        },
+        {
+            "id": "user_3",
+            "name": "Mother",
+            "age": 45,
+            "diseases": [],
+            "access": {
+                "user_1": "partial"
+            }
+        }
+    ]
+}
