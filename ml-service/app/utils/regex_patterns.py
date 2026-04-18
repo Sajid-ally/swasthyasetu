@@ -1,0 +1,7 @@
+DOSAGE_PATTERN = r"\b\d+\s?(mg|ml|g|mcg|tablet|tablets|capsule|capsules|drops)\b"
+DURATION_PATTERN = r"\b\d+\s?(min|mins|minute|minutes|hr|hrs|hour|hours)\b"
+WATER_INTAKE_PATTERN = r"\b\d+(\.\d+)?\s?(l|liter|liters|ml)\b"
+FREQUENCY_PATTERN = r"\b(daily|everyday|twice daily|once daily|weekly|monthly|sometimes|often)\b"
+NUMBER_PATTERN = r"\b\d+(\.\d+)?\b"
+MULTISPACE_PATTERN = r"\s+"
+NON_ALPHANUM_KEEP_BASIC_PATTERN = r"[^a-zA-Z0-9\s\.\-]"
