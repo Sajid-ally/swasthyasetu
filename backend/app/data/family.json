@@ -4,6 +4,18 @@
         {
             "id": "user_1",
             "name": "Nishant Updated",
+            "timeline": [
+                {
+                    "type": "blood_test",
+                    "date": "2026-02-10",
+                    "notes": "Normal report"
+                },
+                {
+                    "type": "bp_test",
+                    "date": "2026-04-18",
+                    "notes": "BP slightly high"
+                }
+            ],
             "age": 20,
             "height_cm": 170,
             "weight_kg": 70,
@@ -37,6 +49,7 @@
         {
             "id": "user_2",
             "name": "Father",
+            "timeline": [],
             "age": 48,
             "diseases": [
                 "bp"
@@ -48,6 +61,7 @@
         {
             "id": "user_3",
             "name": "Mother",
+            "timeline": [],
             "age": 45,
             "diseases": [],
             "access": {
