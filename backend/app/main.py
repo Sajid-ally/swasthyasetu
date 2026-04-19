@@ -10,6 +10,8 @@ from app.api.vitals import router as vitals_router
 from app.api.emergency import router as emergency_router
 from app.api.update import router as update_router   # ✅ NEW
 from app.api.timeline import router as timeline_router
+from app.api.routine import router as routine_router
+from app.api.privacy import router as privacy_router
 
 # Create FastAPI app
 app = FastAPI(
@@ -35,6 +37,8 @@ app.include_router(vitals_router)
 app.include_router(emergency_router)
 app.include_router(update_router)   # ✅ NEW
 app.include_router(timeline_router)
+app.include_router(routine_router)
+app.include_router(privacy_router)
 
 # Root test route
 @app.get("/")

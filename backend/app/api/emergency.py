@@ -10,11 +10,24 @@ def get_emergency(user_id: str):
 
     for member in data["members"]:
         if member["id"] == user_id:
+
+            emergency = member.get("emergency", {})
+
             return {
-                "name": member["name"],
-                "blood_group": member.get("emergency", {}).get("blood_group"),
-                "allergies": member.get("emergency", {}).get("allergies", []),
-                "contact": member.get("emergency", {}).get("contact"),
+                "name": member.get("name"),
+
+                # Basic info
+                "blood_group": emergency.get("blood_group"),
+                "allergies": emergency.get("allergies", []),
+
+                # Doctor info (NEW)
+                "primary_doctor": emergency.get("primary_doctor", {}),
+
+                # Emergency contacts (NEW)
+                "emergency_contacts": emergency.get("emergency_contacts", []),
+
+                # Extra useful info
+                "contact": emergency.get("contact"),
                 "diseases": member.get("diseases", [])
             }
 
