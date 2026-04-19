@@ -14,14 +14,15 @@ KNOWN_MEDICINES = [
 
 BAD_WORDS = {
     "tablet", "tablets", "capsule", "capsules", "syrup", "strip",
-    "mrp", "batch", "mfg", "exp", "use", "before", "after"
+    "mrp", "batch", "mfg", "exp", "use", "before", "after",
+    "rx", "cipla"
 }
 
 def clean_text(texts):
     return " ".join(texts).strip()
 
 def extract_dosage(text):
-    match = re.search(r'\b\d+\s?(mg|ml|g|mcg)\b', text.lower())
+    match = re.search(r'\b\d+(\.\d+)?\s?(mg|ml|g|mcg)\b', text.lower())
     return match.group() if match else None
 
 def extract_medicine_name(text):
@@ -31,11 +32,16 @@ def extract_medicine_name(text):
         if med in text_lower:
             return med
 
-    words = text.split()
+    words = text_lower.split()
+    for med in KNOWN_MEDICINES:
+        for word in words:
+            if med.startswith(word) and len(word) >= 4:
+                return med
+
     for word in words:
         w = re.sub(r'[^a-zA-Z0-9]', '', word)
-        if len(w) > 2 and w.lower() not in BAD_WORDS and not w.isdigit():
-            return w.lower()
+        if len(w) > 3 and w not in BAD_WORDS and not w.isdigit():
+            return w
 
     return None
 

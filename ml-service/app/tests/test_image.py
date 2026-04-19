@@ -1,5 +1,6 @@
 import os
 import csv
+import json
 from app.services.visual_intelligence.pipeline import process_medicine_image
 
 image_folder = "data/sample_images"
@@ -26,6 +27,7 @@ for file_name in os.listdir(image_folder):
 
         print("\n-----------------------------------")
         print("FILE:", file_name)
+        print(json.dumps(result, indent=4))
         print("EXPECTED MEDICINE:", expected_medicine)
         print("PREDICTED MEDICINE:", predicted_medicine)
         print("FULL RESULT:", result)

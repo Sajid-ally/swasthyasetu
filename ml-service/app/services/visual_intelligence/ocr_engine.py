@@ -4,12 +4,19 @@ reader = easyocr.Reader(['en'])
 
 def run_ocr(image):
     results = reader.readtext(image)
-    texts = [item[1] for item in results]
-    confidences = [item[2] for item in results]
+
+    texts = []
+    confidences = []
+
+    for item in results:
+        if len(item) >= 3:
+            texts.append(item[1])
+            confidences.append(item[2])
 
     avg_conf = sum(confidences) / len(confidences) if confidences else 0.0
 
     return {
         "texts": texts,
-        "confidence": float(avg_conf)
+        "confidence": float(avg_conf),
+        "raw_results": results
     }
