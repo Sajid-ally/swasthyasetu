@@ -1,49 +1,51 @@
-from app.schemas.common_schema import HealthCategory, RiskLevel
-from app.utils.constants import (
-    HIGH_RISK_SYMPTOMS,
-    MEDIUM_RISK_SYMPTOMS,
-    HIGH_RISK_CONDITIONS,
-    MEDIUM_RISK_CONDITIONS,
-)
+from typing import Dict, Any
+from app.schemas.common_schema import RiskLevel
 
 
-def get_risk_level(category: HealthCategory, extracted_data: dict) -> RiskLevel:
-    if category == HealthCategory.SYMPTOM:
-        symptom = extracted_data.get("symptom", "")
-        frequency = extracted_data.get("frequency", "")
+def get_enhanced_risk_level(
+    category,
+    extracted_data: Dict[str, Any],
+    health_features: Dict[str, Any],
+    trend_analysis: Dict[str, Any],
+) -> RiskLevel:
+    """
+    Advanced risk calculation using:
+    - current extracted data
+    - historical features
+    - trend analysis
+    """
 
-        if symptom in HIGH_RISK_SYMPTOMS:
-            return RiskLevel.HIGH
+    # Base risk from current input
+    base_risk = RiskLevel.LOW
 
-        if symptom in MEDIUM_RISK_SYMPTOMS:
-            if frequency in ["often", "daily"]:
-                return RiskLevel.MEDIUM
-            return RiskLevel.LOW
+    value = extracted_data.get("symptom") or extracted_data.get("condition")
 
-        return RiskLevel.LOW
+    if value == "chest pain":
+        base_risk = RiskLevel.HIGH
+    elif value in ["high bp", "diabetes"]:
+        base_risk = RiskLevel.MEDIUM
+    elif value in ["poor sleep", "low activity"]:
+        base_risk = RiskLevel.LOW
 
-    if category == HealthCategory.CONDITION:
-        condition = extracted_data.get("condition", "")
+    # Feature-based scoring
+    risk_score = 0
 
-        if condition in HIGH_RISK_CONDITIONS:
-            return RiskLevel.HIGH
+    risk_score += health_features.get("cardiac_risk_score", 0) * 2
+    risk_score += health_features.get("lifestyle_risk_score", 0)
+    risk_score += health_features.get("metabolic_risk_score", 0)
 
-        if condition in MEDIUM_RISK_CONDITIONS:
-            return RiskLevel.MEDIUM
+    # Trend influence
+    trend = trend_analysis.get("trend", "stable")
 
-        return RiskLevel.LOW
+    if trend == "worsening":
+        risk_score += 3
+    elif trend == "watchlist":
+        risk_score += 1
 
-    if category == HealthCategory.FAMILY_HISTORY:
-        if extracted_data.get("condition"):
-            return RiskLevel.MEDIUM
-        return RiskLevel.LOW
-
-    if category == HealthCategory.MEDICATION:
-        if extracted_data.get("medicine_name") and extracted_data.get("dosage"):
-            return RiskLevel.LOW
+    # Final risk decision
+    if risk_score >= 5:
+        return RiskLevel.HIGH
+    elif risk_score >= 2:
         return RiskLevel.MEDIUM
-
-    if category == HealthCategory.ROUTINE:
-        return RiskLevel.LOW
-
-    return RiskLevel.LOW
+    else:
+        return base_risk
