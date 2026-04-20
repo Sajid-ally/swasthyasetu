@@ -1,72 +1,197 @@
 {
-    "family_id": "fam_001",
-    "members": [
-        {
-            "id": "user_1",
-            "name": "Nishant Updated",
-            "timeline": [
-                {
-                    "type": "blood_test",
-                    "date": "2026-02-10",
-                    "notes": "Normal report"
-                },
-                {
-                    "type": "bp_test",
-                    "date": "2026-04-18",
-                    "notes": "BP slightly high"
-                }
-            ],
-            "age": 20,
-            "height_cm": 170,
-            "weight_kg": 70,
-            "diseases": [
-                "diabetes"
-            ],
-            "medications": [
-                "metformin"
-            ],
-            "lifestyle": {
-                "sleep_hours": 4,
-                "exercise": "medium",
-                "smoking": false
-            },
-            "vitals": {
-                "bp": "150/80",
-                "sugar_level": 180
-            },
-            "emergency": {
-                "blood_group": "B+",
-                "allergies": [
-                    "dust"
-                ],
-                "contact": "9876543210"
-            },
-            "access": {
-                "user_2": "full",
-                "user_3": "limited"
-            }
-        },
-        {
-            "id": "user_2",
-            "name": "Father",
-            "timeline": [],
-            "age": 48,
-            "diseases": [
-                "bp"
-            ],
-            "access": {
-                "user_1": "full"
-            }
-        },
-        {
-            "id": "user_3",
-            "name": "Mother",
-            "timeline": [],
-            "age": 45,
-            "diseases": [],
-            "access": {
-                "user_1": "partial"
-            }
+  "family_id": "fam_001",
+  "members": [
+    {
+      "id": "user_1",
+      "name": "Nishant Updated",
+      "relation": "Self",
+      "gender": "Male",
+
+      "email": "newemail@gmail.com",
+      "phone_number": "+919999999999",
+      "date_of_birth": "2004-08-15",
+      "address": "Delhi",
+
+      "privacy": {
+        "doctor_access": true,
+        "family_access": false,
+        "access_logs": [
+          {
+            "action": "Doctor accessed medical report",
+            "time": "2 hours ago"
+          },
+          {
+            "action": "Data downloaded",
+            "time": "Yesterday"
+          }
+        ]
+      },
+
+      "routine": {
+        "sleep_hours": 8,
+        "water_intake": 3,
+        "steps": 9000,
+        "workout_minutes": 40,
+        "tasks_completed": 76,
+        "today_tasks": [
+          {
+            "title": "Morning medication",
+            "time": "08:00 AM",
+            "status": "completed"
+          }
+        ],
+        "weekly_progress": {
+          "monday": 5,
+          "tuesday": 4,
+          "wednesday": 2,
+          "thursday": 6,
+          "friday": 3
         }
-    ]
+      },
+
+      "timeline": [
+        {
+          "title": "Blood Test Report",
+          "type": "report",
+          "date": "2026-02-10",
+          "time": "09:00 AM",
+          "notes": "Normal report",
+          "doctor": "Lab",
+          "location": "Diagnostic Center"
+        },
+        {
+          "title": "BP Checkup",
+          "type": "checkup",
+          "date": "2026-04-18",
+          "time": "11:30 AM",
+          "notes": "BP slightly high",
+          "doctor": "Dr. Sharma",
+          "location": "City Clinic"
+        },
+        {
+          "title": "Evening Medication",
+          "type": "medication",
+          "date": "2026-04-19",
+          "time": "08:00 PM",
+          "notes": "Take BP medicine",
+          "doctor": "",
+          "location": "Home"
+        }
+      ],
+
+      "age": 20,
+      "height_cm": 172.0,
+      "weight_kg": 72.0,
+
+      "diseases": ["diabetes"],
+      "medications": ["metformin"],
+
+      "lifestyle": {
+        "sleep_hours": 4,
+        "exercise": "medium",
+        "smoking": false
+      },
+
+      "vitals": {
+        "bp": "150/80",
+        "sugar_level": 180
+      },
+
+      "emergency": {
+        "blood_group": "B+",
+        "allergies": [
+          {
+            "name": "Penicillin",
+            "description": "Avoid penicillin-based antibiotics"
+          },
+          {
+            "name": "Dust",
+            "description": "May trigger sneezing and breathing discomfort"
+          }
+        ],
+        "contact": "9876543210",
+        "primary_doctor": {
+          "name": "Dr. Nureen",
+          "specialization": "General Physician",
+          "phone": "+919012345678",
+          "hospital": "Ursala Hospital, Kanpur"
+        },
+        "emergency_contacts": [
+          {
+            "name": "Sunita Jaiswal",
+            "relation": "Mother",
+            "phone": "+919876543210",
+            "priority": 1
+          },
+          {
+            "name": "Rajesh Jaiswal",
+            "relation": "Father",
+            "phone": "+919876567655",
+            "priority": 2
+          }
+        ]
+      },
+
+      "access": {
+        "user_2": "full",
+        "user_3": "limited"
+      }
+    },
+
+    {
+      "id": "user_2",
+      "name": "Father",
+      "relation": "Father",
+      "gender": "Male",
+
+      "email": "father@example.com",
+      "phone_number": "+919111111111",
+      "date_of_birth": "1978-05-10",
+      "address": "Kanpur, Uttar Pradesh",
+
+      "privacy": {
+        "doctor_access": false,
+        "family_access": true,
+        "access_logs": []
+      },
+
+      "routine": {},
+      "timeline": [],
+
+      "age": 48,
+      "diseases": ["bp"],
+
+      "access": {
+        "user_1": "full"
+      }
+    },
+
+    {
+      "id": "user_3",
+      "name": "Mother",
+      "relation": "Mother",
+      "gender": "Female",
+
+      "email": "mother@example.com",
+      "phone_number": "+919222222222",
+      "date_of_birth": "1981-09-12",
+      "address": "Kanpur, Uttar Pradesh",
+
+      "privacy": {
+        "doctor_access": false,
+        "family_access": true,
+        "access_logs": []
+      },
+
+      "routine": {},
+      "timeline": [],
+
+      "age": 45,
+      "diseases": [],
+
+      "access": {
+        "user_1": "partial"
+      }
+    }
+  ]
 }
