@@ -1,8 +1,21 @@
-from fastapi import APIRouter
-from app.services.smart_add.pipeline import process_smart_add_text
+from fastapi import APIRouter, HTTPException
 
-router = APIRouter()
+from app.schemas.text_schema import TextInputSchema, TextRouteResponseSchema
+from app.services.smart_add.pipeline import process_health_text
 
-@router.post("/smart-add")
-def smart_add(text: str):
-    return process_smart_add_text(text)
+router = APIRouter(prefix="/smart-add", tags=["Smart Add Text"])
+
+
+@router.post("/text", response_model=TextRouteResponseSchema)
+def smart_add_text(payload: TextInputSchema) -> TextRouteResponseSchema:
+    """
+    Accepts raw health-related text input and returns structured ML output.
+    """
+    try:
+        result = process_health_text(payload.text)
+        return result
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Text processing failed: {str(exc)}"
+        )
