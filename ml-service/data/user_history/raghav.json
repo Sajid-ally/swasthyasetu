@@ -1,0 +1,14 @@
+[
+  {
+    "category": "symptom",
+    "value": "chest pain",
+    "confidence": 0.92,
+    "timestamp": "2026-04-19T08:17:44.175213"
+  },
+  {
+    "category": "routine",
+    "value": "low sleep",
+    "confidence": 0.88,
+    "timestamp": "2026-04-19T08:17:44.175672"
+  }
+]
