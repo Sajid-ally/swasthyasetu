@@ -7,58 +7,42 @@ import PageContainer from "../components/layout/PageContainer";
 import InfoBadge from "../components/common/InfoBadge";
 
 import { fetchProfile } from "../services/profileService";
+import { useUser } from "../context/UserContext";
 
 const ProfilePage = () => {
-  const [userId, setUserId] = useState("");
+  const { userId, setUserId } = useUser(); // ✅ SINGLE SOURCE
+
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // ✅ LOAD FROM LOCAL STORAGE ON PAGE LOAD
+  // ✅ AUTO FETCH WHEN USER CHANGES
   useEffect(() => {
-    const savedUser = localStorage.getItem("userId");
-    const savedProfile = localStorage.getItem("profileData");
-
-    if (savedUser && savedProfile) {
-      setUserId(savedUser);
-      setProfileData(JSON.parse(savedProfile));
-    }
-  }, []);
-
-  // 🔥 FETCH PROFILE
-  const handleFetch = async () => {
     if (!userId) return;
 
-    try {
-      setLoading(true);
+    setLoading(true);
 
-      const data = await fetchProfile(userId);
+    fetchProfile(userId)
+      .then((data) => {
+        if (!data.error) {
+          setProfileData(data);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => setLoading(false));
 
-      if (data.error) {
-        alert("User not found ❌");
-        return;
-      }
+  }, [userId]);
 
-      setProfileData(data);
-
-      // ✅ SAVE TO LOCAL STORAGE
-      localStorage.setItem("userId", userId);
-      localStorage.setItem("profileData", JSON.stringify(data));
-
-    } catch (err) {
-      console.error(err);
-      alert("Error fetching profile");
-    } finally {
-      setLoading(false);
-    }
+  // 🔥 MANUAL FETCH BUTTON
+  const handleFetch = () => {
+    if (!userId) return;
+    // trigger useEffect automatically
   };
 
-  // 🔥 CLEAR DATA BUTTON
   const handleClear = () => {
     setUserId("");
     setProfileData(null);
-
-    localStorage.removeItem("userId");
-    localStorage.removeItem("profileData");
   };
 
   return (
@@ -68,14 +52,11 @@ const ProfilePage = () => {
     >
       <div className="space-y-6">
 
-        {/* 🔥 SEARCH + CLEAR */}
+        {/* INPUT */}
         <div className="flex gap-3">
           <input
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleFetch();
-            }}
             placeholder="Enter User ID (e.g. user_1)"
             className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white"
           />
@@ -103,7 +84,7 @@ const ProfilePage = () => {
 
               <div>
                 <h2 className="text-xl font-semibold text-white">
-                  {profileData?.fullName || "Profile User"}
+                  {profileData?.name || "Profile User"} {/* ✅ FIX */}
                 </h2>
 
                 <p className="mt-1 text-sm text-slate-400">
@@ -112,7 +93,7 @@ const ProfilePage = () => {
 
                 <div className="mt-3 flex flex-wrap gap-2">
                   <InfoBadge
-                    label={profileData?.bloodGroup || "Blood Group N/A"}
+                    label={profileData?.blood_group || "Blood Group N/A"} // ✅ FIX
                     variant="danger"
                   />
                   <InfoBadge label="Profile Active" variant="success" />

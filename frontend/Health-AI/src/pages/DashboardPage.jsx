@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getDashboard } from "../services/dashboardApi";
-
+import { useUser } from "../context/UserContext"; 
 import HealthScoreCard from "../components/dashboard/HealthScoreCard";
 import DailyRoutineCard from "../components/dashboard/DailyRoutineCard";
 import RiskAlertsCard from "../components/dashboard/RiskAlertsCard";
@@ -15,15 +15,21 @@ import EmptyState from "../components/common/EmptyState";
 import ErrorState from "../components/common/ErrorState";
 
 const DashboardPage = () => {
+  const { userId } = useUser(); // ✅ inside component
+
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    getDashboard("user_1")
+    if (!userId) return;
+
+    setIsLoading(true);
+
+    getDashboard(userId)
       .then((res) => {
-        console.log("API DATA 👉", res.data);
-        setData(res.data);
+        console.log("API DATA 👉", res);
+        setData(res);
       })
       .catch((err) => {
         console.error(err);
@@ -32,14 +38,9 @@ const DashboardPage = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [userId]);
 
-  // =========================
-  // STATES
-  // =========================
-  if (isLoading) {
-    return <Loader text="Loading dashboard..." />;
-  }
+  if (isLoading) return <Loader text="Loading dashboard..." />;
 
   if (hasError) {
     return (
@@ -59,45 +60,45 @@ const DashboardPage = () => {
     );
   }
 
-  // =========================
-  // UI WITH REAL DATA
-  // =========================
-  return (
-    <div className="space-y-6">
-      <div className="rounded-card border border-red-500/20 bg-red-500/10 p-4 text-red-300">
-        <p className="font-semibold">Emergency Profile Active</p>
-        <p className="mt-1 text-sm text-slate-300">
-          First responders can access your blood type and allergy info.
-        </p>
+ return (
+  <div className="space-y-6">
+
+    <div className="text-sm text-slate-400">
+      Welcome {data.name} 👋
+    </div>
+
+    <div className="rounded-card border border-red-500/20 bg-red-500/10 p-4 text-red-300">
+      <p className="font-semibold">Emergency Profile Active</p>
+    </div>
+
+    <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
+      <HealthScoreCard data={data.healthScore} />
+      <DailyRoutineCard data={data.dailyRoutine} />
+      <RiskAlertsCard alerts={data.riskAlerts} />
+    </div>
+
+    <WeeklyTrend data={data.weeklyActivity} />
+
+    <div className="grid grid-cols-1 gap-6 xl:grid-cols-5">
+      <div className="xl:col-span-3">
+        <RecentActivity activities={data.recentActivity} />
       </div>
-
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
-        <HealthScoreCard data={data.healthScore} />
-        <DailyRoutineCard data={data.dailyRoutine} />
-        <RiskAlertsCard alerts={data.riskAlerts} />
-      </div>
-
-      <WeeklyTrend data={data.weeklyActivity} />
-
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-5">
-        <div className="xl:col-span-3">
-          <RecentActivity activities={data.recentActivity} />
-        </div>
-        <div className="xl:col-span-2">
-          <MedicationSchedule medicines={data.medications} />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-5">
-        <div className="xl:col-span-3">
-          <AIHealthSummary summary={data.aiSummary} />
-        </div>
-        <div className="xl:col-span-2">
-          <FamilyHistoryCard history={data.familyHistory} />
-        </div>
+      <div className="xl:col-span-2">
+        <MedicationSchedule medicines={data.medications} />
       </div>
     </div>
-  );
+
+    <div className="grid grid-cols-1 gap-6 xl:grid-cols-5">
+      <div className="xl:col-span-3">
+        <AIHealthSummary summary={data.aiSummary} />
+      </div>
+      <div className="xl:col-span-2">
+        <FamilyHistoryCard history={data.familyHistory} />
+      </div>
+    </div>
+
+  </div>
+);
 };
 
 export default DashboardPage;

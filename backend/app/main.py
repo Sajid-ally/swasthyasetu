@@ -30,8 +30,28 @@ from app.api.update import router as update_router
 from app.api.timeline import router as timeline_router
 from app.api.routine import router as routine_router
 from app.api.privacy import router as privacy_router
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+app = FastAPI()
 
+# CORS FIRST
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# IMPORT AFTER APP
+from app.api.dashboard import router as dashboard_router
+from app.api.smart_add import router as smart_add_router
+from app.api.profile import router as profile_router
 # 🔥 REGISTER ROUTES
+app.include_router(dashboard_router)
+app.include_router(smart_add_router)
+app.include_router(profile_router)
+
 app.include_router(dashboard_router)
 app.include_router(smart_add_router)
 app.include_router(family_router)
