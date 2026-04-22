@@ -55,7 +55,26 @@ const getBMIData = (heightValue, weightValue) => {
 };
 
 const BMIDisplay = ({ profile = {} }) => {
-  const bmiData = getBMIData(profile.height, profile.weight);
+
+  // ✅ FIX 1: fallback support
+  const height = profile.height_cm || profile.height;
+  const weight = profile.weight_kg || profile.weight;
+
+  const bmiValue = profile.bmi;
+
+  // ✅ FIX 2: missing semicolon fixed
+  const bmiData = bmiValue
+    ? {
+        bmi: bmiValue,
+        ...(bmiValue < 18.5
+          ? { category: "Underweight", variant: "warning", progress: 25 }
+          : bmiValue < 25
+          ? { category: "Normal", variant: "success", progress: 55 }
+          : bmiValue < 30
+          ? { category: "Overweight", variant: "warning", progress: 78 }
+          : { category: "Obese", variant: "danger", progress: 100 }),
+      }
+    : getBMIData(height, weight); // ✅ FIXED
 
   return (
     <SectionCard
@@ -64,6 +83,8 @@ const BMIDisplay = ({ profile = {} }) => {
       icon={Scale}
     >
       <div className="space-y-5">
+
+        {/* BMI CARD */}
         <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
           <div className="mb-4 flex items-start justify-between gap-3">
             <div>
@@ -91,6 +112,7 @@ const BMIDisplay = ({ profile = {} }) => {
           </p>
         </div>
 
+        {/* HEIGHT & WEIGHT */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
             <div className="mb-2 flex items-center gap-2 text-slate-400">
@@ -98,7 +120,7 @@ const BMIDisplay = ({ profile = {} }) => {
               <span className="text-sm">Height</span>
             </div>
             <p className="text-lg font-semibold text-white">
-              {profile.height || "Not available"}
+              {height ? `${height} cm` : "Not available"}
             </p>
           </div>
 
@@ -108,11 +130,12 @@ const BMIDisplay = ({ profile = {} }) => {
               <span className="text-sm">Weight</span>
             </div>
             <p className="text-lg font-semibold text-white">
-              {profile.weight || "Not available"}
+              {weight ? `${weight} kg` : "Not available"}
             </p>
           </div>
         </div>
 
+        {/* INSIGHT */}
         <div className="rounded-2xl border border-primary/20 bg-primary/10 p-4">
           <div className="mb-2 flex items-center gap-2 text-primary">
             <HeartPulse size={16} />
@@ -123,6 +146,7 @@ const BMIDisplay = ({ profile = {} }) => {
             with lifestyle, medical history, and other health indicators.
           </p>
         </div>
+
       </div>
     </SectionCard>
   );

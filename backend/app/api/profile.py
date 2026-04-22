@@ -11,7 +11,6 @@ def get_profile(user_id: str):
     for member in data["members"]:
         if member["id"] == user_id:
 
-            # BMI calculation
             height = member.get("height_cm")
             weight = member.get("weight_kg")
 
@@ -30,12 +29,10 @@ def get_profile(user_id: str):
                 "blood_group": member.get("emergency", {}).get("blood_group"),
                 "address": member.get("address"),
 
-                # Health Info
                 "height_cm": height,
                 "weight_kg": weight,
-                "bmi": bmi,
+                "bmi": bmi,   # ✅ IMPORTANT
 
-                # Existing fields
                 "diseases": member.get("diseases", []),
                 "medications": member.get("medications", []),
                 "lifestyle": member.get("lifestyle", {}),
