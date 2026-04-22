@@ -1,0 +1,617 @@
+[
+  {
+    "original_text": "I have high bp and poor sleep",
+    "cleaned_text": "i have high bp and poor sleep",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T00:41:33.357254"
+  },
+  {
+    "original_text": "I have high bp and poor sleep",
+    "cleaned_text": "i have high bp and poor sleep",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T00:41:34.957548"
+  },
+  {
+    "original_text": "I have high bp and poor sleep",
+    "cleaned_text": "i have high bp and poor sleep",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T00:44:42.540138"
+  },
+  {
+    "original_text": "diabetes poor sleep  diabetes",
+    "cleaned_text": "diabetes poor sleep diabetes",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T00:56:08.588398"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:06:02.261174"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:07:34.103405"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:07:51.052132"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:09:38.107477"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:12:02.700681"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:12:56.770222"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:14:11.113074"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:14:17.344409"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:22:10.400341"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:25:30.035991"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:27:03.454370"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:27:59.487213"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:34:57.178373"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:34:58.264953"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:35:00.319468"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:35:02.384565"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:35:04.434206"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:38:31.395332"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:38:33.469200"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:47:21.480625"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:49:26.902623"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:49:28.922893"
+  },
+  {
+    "original_text": "I have high bp and poor sleep",
+    "cleaned_text": "i have high bp and poor sleep",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:53:13.362804"
+  },
+  {
+    "original_text": "I have high bp and poor sleep",
+    "cleaned_text": "i have high bp and poor sleep",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T01:53:15.144940"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T02:04:19.153121"
+  },
+  {
+    "original_text": "I have poor sleep and high bp",
+    "cleaned_text": "i have poor sleep and high bp",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T02:08:00.693265"
+  },
+  {
+    "original_text": "I have poor sleep and high bp",
+    "cleaned_text": "i have poor sleep and high bp",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T02:08:03.059719"
+  },
+  {
+    "original_text": "I have poor sleep and high bp",
+    "cleaned_text": "i have poor sleep and high bp",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T02:08:59.254687"
+  },
+  {
+    "original_text": "I have poor sleep and high bp",
+    "cleaned_text": "i have poor sleep and high bp",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T02:09:07.252725"
+  },
+  {
+    "original_text": "I have poor sleep and high bp",
+    "cleaned_text": "i have poor sleep and high bp",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T02:11:04.101368"
+  },
+  {
+    "original_text": "I have poor sleep and high bp",
+    "cleaned_text": "i have poor sleep and high bp",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T02:19:22.928140"
+  },
+  {
+    "original_text": "poor sleep bp 150 sugar 180",
+    "cleaned_text": "poor sleep bp 150 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T02:25:19.508642"
+  },
+  {
+    "original_text": "poor sleep bp 150 sugar 180",
+    "cleaned_text": "poor sleep bp 150 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T02:27:01.911611"
+  },
+  {
+    "original_text": "poor sleep bp 150 sugar 180",
+    "cleaned_text": "poor sleep bp 150 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep"
+    },
+    "confidence": 0.8,
+    "score": 0.25,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T02:34:26.769797"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T02:34:44.761922"
+  },
+  {
+    "original_text": "diabetes sleep 4 hours bp 150/80 sugar 180",
+    "cleaned_text": "diabetes sleep 4 hours bp 150 80 sugar 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "4 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T02:34:44.780236"
+  },
+  {
+    "original_text": "I exercise daily and sleep well",
+    "cleaned_text": "i exercise daily and sleep well",
+    "category": "routine",
+    "value": "exercise",
+    "extracted_data": {
+      "activity": "exercise",
+      "frequency": "daily"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-21T02:40:12.813035"
+  },
+  {
+    "original_text": "bp 150/80 sleep 6 hours",
+    "cleaned_text": "bp 150 80 sleep 6 hours",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "6 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T03:35:03.082277"
+  }
+]

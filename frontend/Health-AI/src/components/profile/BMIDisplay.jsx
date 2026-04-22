@@ -55,8 +55,21 @@ const getBMIData = (heightValue, weightValue) => {
 };
 
 const BMIDisplay = ({ profile = {} }) => {
-  const bmiData = getBMIData(profile.height, profile.weight);
+  
+const bmiValue = profile.bmi;
 
+const bmiData = bmiValue
+  ? {
+      bmi: bmiValue,
+      ...(bmiValue < 18.5
+        ? { category: "Underweight", variant: "warning", progress: 25 }
+        : bmiValue < 25
+        ? { category: "Normal", variant: "success", progress: 55 }
+        : bmiValue < 30
+        ? { category: "Overweight", variant: "warning", progress: 78 }
+        : { category: "Obese", variant: "danger", progress: 100 }),
+    }
+  : getBMIData(profile.height, profile.weight);
   return (
     <SectionCard
       title="BMI Overview"

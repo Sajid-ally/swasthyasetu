@@ -1,33 +1,70 @@
-from typing import Dict, Any
+def build_final_response(extracted_data: dict) -> dict:
+    print("🔥 FULL DATA 👉", extracted_data)
 
+    # =========================
+    # CASE 1 → FULL STRUCTURE
+    # =========================
+    if "data" in extracted_data:
+        final = (
+            extracted_data.get("data", {})
+            .get("extracted_data", {})
+            .get("final_output")
+        )
 
-def build_final_response(extracted_data: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Convert raw pipeline output into frontend/dashboard-ready response.
-    """
+        if final:
+            print("✅ USING FINAL OUTPUT (FULL STRUCTURE)")
+            return final
 
-    health_score = extracted_data.get("health_score", {})
-    severity = extracted_data.get("severity_analysis", {})
-    timeline = extracted_data.get("timeline_insights", {})
-    response = extracted_data.get("user_friendly_response", {})
-    followups = extracted_data.get("followup_questions", [])
+    # =========================
+    # CASE 2 → FLATTENED STRUCTURE
+    # =========================
+    if "user_friendly_response" in extracted_data:
+        print("✅ USING FLATTENED ML OUTPUT")
 
-    final_output = {
-        "health_score": health_score.get("score", 0),
-        "health_level": health_score.get("level", "unknown"),
+        response = extracted_data.get("user_friendly_response", {})
+        severity = extracted_data.get("severity_analysis", {})
 
-        "severity": severity.get("severity_level", "low"),
-        "priority_score": severity.get("priority_score", 0),
-        "alerts": severity.get("priority_tags", []),
+        return {
+            "health_score": extracted_data.get("health_score", {}).get("score", 0),
+            "health_level": extracted_data.get("health_score", {}).get("level", "unknown"),
 
-        "summary": response.get("summary", ""),
-        "risk_explanation": response.get("risk_explanation", ""),
+            "severity": severity.get("severity_level", "low"),
+            "priority_score": severity.get("priority_score", 0),
+            "alerts": severity.get("priority_tags", []),
 
-        "timeline_summary": timeline.get("timeline_summary", ""),
-        "pattern_notes": timeline.get("pattern_notes", []),
+            "summary": response.get("summary", "No summary available."),
+            "risk_explanation": response.get("risk_explanation", ""),
 
-        "suggestions": response.get("suggestions", []),
-        "followups": followups,
+            "timeline_summary": extracted_data.get("timeline_insights", {}).get(
+                "timeline_summary", ""
+            ),
+            "pattern_notes": extracted_data.get("timeline_insights", {}).get(
+                "pattern_notes", []
+            ),
+
+            "suggestions": [
+                {"title": s, "description": ""} if isinstance(s, str) else s
+                for s in response.get("suggestions", [])
+            ],
+
+            "followups": extracted_data.get("followup_questions", [])
+        }
+
+    # =========================
+    # FALLBACK
+    # =========================
+    print("❌ FINAL OUTPUT NOT FOUND → FALLBACK")
+
+    return {
+        "health_score": 0,
+        "health_level": "unknown",
+        "severity": "low",
+        "priority_score": 0,
+        "alerts": [],
+        "summary": "No summary available.",
+        "risk_explanation": "No risk explanation available.",
+        "timeline_summary": "No timeline insights available.",
+        "pattern_notes": [],
+        "suggestions": [],
+        "followups": []
     }
-
-    return final_output

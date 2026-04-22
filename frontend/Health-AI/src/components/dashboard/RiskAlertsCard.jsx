@@ -31,7 +31,7 @@ const RiskAlertsCard = ({ alerts }) => {
   return (
     <SectionCard title="Risk Alerts" icon={TriangleAlert}>
       <div className="space-y-4">
-        {alerts.map((alert) => {
+        {(alerts || []).map((alert) => {
           const styles = getAlertStyles(alert.level);
 
           return (

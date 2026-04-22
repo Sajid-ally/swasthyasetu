@@ -30,7 +30,7 @@ const RecentActivity = ({ activities }) => {
   return (
     <SectionCard title="Recent Activity Timeline" icon={Activity}>
       <div className="space-y-5">
-        {activities.map((item, index) => {
+        {(activities || []).map((item, index) => {
           const { Icon, wrapper } = getActivityIcon(item.type);
 
           return (
