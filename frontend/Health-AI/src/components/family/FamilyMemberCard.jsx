@@ -20,8 +20,11 @@ const accessConfig = {
 };
 
 const FamilyMemberCard = ({ member = {} }) => {
-  const currentAccess = accessConfig[member.accessLevel] || accessConfig.limited;
-  const AccessIcon = currentAccess.icon;
+  // ✅ SAFE FALLBACK (VERY IMPORTANT)
+  const currentAccess =
+    accessConfig[member?.accessLevel] || accessConfig["limited"];
+
+  const AccessIcon = currentAccess.icon || ShieldAlert;
 
   return (
     <div className="group rounded-3xl border border-white/10 bg-white/5 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:bg-white/10">

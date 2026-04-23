@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Users, ShieldCheck, HeartPulse } from "lucide-react";
 import PageContainer from "../components/layout/PageContainer";
 import FamilyTreeView from "../components/family/FamilyTreeView";
 import AccessLegend from "../components/family/AccessLegend";
 import AddFamilyMemberModal from "../components/family/AddFamilyMemberModal";
 import InfoBadge from "../components/common/InfoBadge";
-import { familyData as initialFamilyData } from "../utils/mockData";
 
 const FamilyTreePage = () => {
-  const [members, setMembers] = useState(initialFamilyData || []);
+  const [members, setMembers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     relation: "",
@@ -18,6 +19,44 @@ const FamilyTreePage = () => {
     accessLevel: "",
     conditions: "",
   });
+
+  const userId = "user_1";
+
+  useEffect(() => {
+    fetchFamilyData();
+  }, []);
+
+  const fetchFamilyData = async () => {
+    try {
+      const res = await axios.get(`http://localhost:8000/family/${userId}`);
+
+      const backendMembers = res?.data?.familyTree?.members || [];
+
+      const formattedMembers = backendMembers.map((m) => ({
+  id: m.id,
+  name: m.name,
+  relation: m.relation,
+  age: m.age,
+  gender: m.gender,
+
+  // ✅ FIX (handle all cases safely)
+  accessLevel:
+    m?.accessLevel === "FULL_ACCESS"
+      ? "full"
+      : m?.accessLevel === "LIMITED_ACCESS"
+      ? "limited"
+      : m?.accessLevel === "EMERGENCY_ONLY"
+      ? "emergency"
+      : "limited",   // fallback
+
+  conditions: m?.healthConditions || [],
+}));
+
+      setMembers(formattedMembers);
+    } catch (err) {
+      console.error("Error fetching family data", err);
+    }
+  };
 
   const handleOpenModal = () => setIsModalOpen(true);
 
@@ -41,30 +80,40 @@ const FamilyTreePage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  // ✅ CONNECTED TO BACKEND
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newMember = {
-      id: Date.now(),
-      name: formData.name.trim(),
-      relation: formData.relation.trim(),
-      age: formData.age ? Number(formData.age) : "",
-      gender: formData.gender,
-      accessLevel: formData.accessLevel || "limited",
-      conditions: formData.conditions
-        ? formData.conditions
-            .split(",")
-            .map((item) => item.trim())
-            .filter(Boolean)
-        : [],
-    };
+    try {
+      const payload = {
+        name: formData.name.trim(),
+        relation: formData.relation.trim(),
+        age: formData.age ? Number(formData.age) : null,
+        gender: formData.gender,
+        access:
+          formData.accessLevel === "full"
+            ? "full"
+            : formData.accessLevel === "limited"
+            ? "partial"
+            : "limited",
+        conditions: formData.conditions
+          ? formData.conditions
+              .split(",")
+              .map((item) => item.trim())
+              .filter(Boolean)
+          : [],
+      };
 
-    if (!newMember.name || !newMember.relation) {
-      return;
+      await axios.post(
+        `http://localhost:8000/family/add/${userId}`,
+        payload
+      );
+
+      fetchFamilyData();
+      handleCloseModal();
+    } catch (err) {
+      console.error("Error adding member", err);
     }
-
-    setMembers((prev) => [newMember, ...prev]);
-    handleCloseModal();
   };
 
   return (
@@ -73,9 +122,11 @@ const FamilyTreePage = () => {
       subtitle="Manage linked family members, inherited risks, and access permissions"
     >
       <div className="space-y-6">
-        {/* Top summary strip */}
+
+        {/* HEADER */}
         <div className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-soft">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+
             <div className="flex items-start gap-4">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-primary/10 text-primary">
                 <Users size={24} />
@@ -120,9 +171,11 @@ const FamilyTreePage = () => {
                 </p>
               </div>
             </div>
+
           </div>
         </div>
 
+        {/* ✅ BUTTON ALREADY INSIDE THIS */}
         <FamilyTreeView members={members} onAddMember={handleOpenModal} />
 
         <AccessLegend />
@@ -134,6 +187,7 @@ const FamilyTreePage = () => {
           formData={formData}
           onChange={handleChange}
         />
+
       </div>
     </PageContainer>
   );

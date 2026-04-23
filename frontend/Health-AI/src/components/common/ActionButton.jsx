@@ -2,6 +2,7 @@ const ActionButton = ({
   children,
   variant = "primary",
   type = "button",
+  onClick,   // ✅ ADD THIS
 }) => {
   const styles = {
     primary:
@@ -15,6 +16,7 @@ const ActionButton = ({
   return (
     <button
       type={type}
+      onClick={onClick}   // ✅ ADD THIS
       className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${styles[variant]}`}
     >
       {children}

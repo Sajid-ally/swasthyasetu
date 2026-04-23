@@ -1,11 +1,12 @@
-from fastapi import APIRouter
-from app.services.data_loader import load_family_data
+from fastapi import APIRouter, Body
+from app.services.data_loader import load_family_data, save_family_data
+import uuid
 
 router = APIRouter(prefix="/family", tags=["Family"])
 
 
 # =========================
-# EXISTING API (KEEP THIS)
+# EXISTING API (DO NOT TOUCH)
 # =========================
 @router.get("/view/{user_id}")
 def get_user_data(user_id: str, viewer_id: str):
@@ -32,7 +33,7 @@ def get_user_data(user_id: str, viewer_id: str):
         return {
             "id": target_user["id"],
             "name": target_user["name"],
-            "age": target_user["age"]
+            "age": target_user.get("age")
         }
 
     elif access_level == "limited":
@@ -46,19 +47,14 @@ def get_user_data(user_id: str, viewer_id: str):
 
 
 # =========================
-# NEW FAMILY UI API
+# FAMILY TREE DASHBOARD API
 # =========================
 @router.get("/{user_id}")
 def get_family_dashboard(user_id: str):
     data = load_family_data()
-
     members = data["members"]
 
-    user = None
-    for m in members:
-        if m["id"] == user_id:
-            user = m
-            break
+    user = next((m for m in members if m["id"] == user_id), None)
 
     if not user:
         return {"error": "User not found"}
@@ -67,7 +63,6 @@ def get_family_dashboard(user_id: str):
 
     for member in members:
         access_map = member.get("access", {})
-
         access_level = access_map.get(user_id, "none")
 
         access_mapping = {
@@ -80,7 +75,7 @@ def get_family_dashboard(user_id: str):
         family_members.append({
             "id": member["id"],
             "name": member.get("name"),
-            "relation": member.get("relation", "Unknown"),
+            "relation": member.get("relation", "Family"),
             "age": member.get("age"),
             "gender": member.get("gender", "Unknown"),
             "healthConditions": member.get("diseases", []),
@@ -88,29 +83,32 @@ def get_family_dashboard(user_id: str):
         })
 
     return {
-        "familyNetwork": {
-            "title": "Connected Family Network",
-            "description": "Track linked members, shared health history, and controlled access.",
-            "accessStatus": "Controlled permissions",
-            "insights": "Inherited risk tracking"
-        },
         "familyTree": {
-            "title": "Family Tree",
-            "description": "View family-linked members, relationship details, access level, and recorded conditions.",
             "members": family_members
-        },
-        "accessLevels": [
-            {
-                "type": "FULL_ACCESS",
-                "description": "Can view and manage complete health records"
-            },
-            {
-                "type": "LIMITED_ACCESS",
-                "description": "Can view selected health information only"
-            },
-            {
-                "type": "EMERGENCY_ONLY",
-                "description": "Accessible only during emergencies"
-            }
-        ]
+        }
     }
+
+
+# =========================
+# ✅ ADD MEMBER API (NEW)
+# =========================
+@router.post("/add/{user_id}")
+def add_family_member(user_id: str, member: dict = Body(...)):
+    data = load_family_data()
+
+    new_member = {
+        "id": f"user_{uuid.uuid4().hex[:6]}",
+        "name": member.get("name"),
+        "relation": member.get("relation", "Family"),
+        "gender": member.get("gender", "Unknown"),
+        "age": member.get("age"),
+        "diseases": member.get("conditions", []),
+        "access": {
+            user_id: member.get("access", "limited")
+        }
+    }
+
+    data["members"].append(new_member)
+    save_family_data(data)
+
+    return {"message": "Member added", "member": new_member}

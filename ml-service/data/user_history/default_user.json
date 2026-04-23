@@ -1763,5 +1763,815 @@
     "risk_level": "low",
     "source": "text",
     "timestamp": "2026-04-22T17:52:23.930936"
+  },
+  {
+    "original_text": "\n    sleep 5 hours\n    steps 2500\n    workout 15\n    blood pressure 150/95\n    sugar level 160\n    cholesterol 260\n    ",
+    "cleaned_text": "sleep 5 hours steps 2500 workout 15 blood pressure 150 95 sugar level 160 cholesterol 260",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "5 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T22:10:43.064334"
+  },
+  {
+    "original_text": "\n    sleep 5 hours\n    steps 2500\n    workout 15\n    blood pressure 150/95\n    sugar level 160\n    cholesterol 260\n    ",
+    "cleaned_text": "sleep 5 hours steps 2500 workout 15 blood pressure 150 95 sugar level 160 cholesterol 260",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "5 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T22:10:43.118111"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T22:11:47.624214"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T22:11:47.664308"
+  },
+  {
+    "original_text": "\n    sleep 7 hours\n    steps 6000\n    workout 30\n    blood pressure 110/70\n    sugar level 90\n    cholesterol 180\n    ",
+    "cleaned_text": "sleep 7 hours steps 6000 workout 30 blood pressure 110 70 sugar level 90 cholesterol 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "7 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T22:12:39.609270"
+  },
+  {
+    "original_text": "\n    sleep 7 hours\n    steps 6000\n    workout 30\n    blood pressure 110/70\n    sugar level 90\n    cholesterol 180\n    ",
+    "cleaned_text": "sleep 7 hours steps 6000 workout 30 blood pressure 110 70 sugar level 90 cholesterol 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "7 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T22:12:39.655471"
+  },
+  {
+    "original_text": "\n    sleep 5 hours\n    steps 2500\n    workout 15\n    blood pressure 150/95\n    sugar level 160\n    cholesterol 260\n    ",
+    "cleaned_text": "sleep 5 hours steps 2500 workout 15 blood pressure 150 95 sugar level 160 cholesterol 260",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "5 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T22:13:19.479155"
+  },
+  {
+    "original_text": "\n    sleep 5 hours\n    steps 2500\n    workout 15\n    blood pressure 150/95\n    sugar level 160\n    cholesterol 260\n    ",
+    "cleaned_text": "sleep 5 hours steps 2500 workout 15 blood pressure 150 95 sugar level 160 cholesterol 260",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "5 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T22:13:19.540601"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:18:46.468263"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:18:46.513965"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:20:49.508058"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:20:49.557026"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:34:06.651640"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:34:06.729911"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:38:02.426567"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:38:02.476017"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:46:18.581722"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:46:18.658979"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:46:31.745651"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:46:31.797437"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:46:40.431558"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:46:40.484916"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:46:57.526127"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:46:57.589657"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:57:12.845952"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-22T23:57:12.899103"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:00:39.410035"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:00:39.461167"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:03:46.822037"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:03:46.886818"
+  },
+  {
+    "original_text": "\n    sleep 5 hours\n    steps 2500\n    workout 15\n    blood pressure 150/95\n    sugar level 160\n    cholesterol 260\n    ",
+    "cleaned_text": "sleep 5 hours steps 2500 workout 15 blood pressure 150 95 sugar level 160 cholesterol 260",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "5 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:13:38.838916"
+  },
+  {
+    "original_text": "\n    sleep 5 hours\n    steps 2500\n    workout 15\n    blood pressure 150/95\n    sugar level 160\n    cholesterol 260\n    ",
+    "cleaned_text": "sleep 5 hours steps 2500 workout 15 blood pressure 150 95 sugar level 160 cholesterol 260",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "5 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:13:38.900194"
+  },
+  {
+    "original_text": "\n    sleep 5 hours\n    steps 2500\n    workout 15\n    blood pressure 150/95\n    sugar level 160\n    cholesterol 260\n    ",
+    "cleaned_text": "sleep 5 hours steps 2500 workout 15 blood pressure 150 95 sugar level 160 cholesterol 260",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "5 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:14:08.833284"
+  },
+  {
+    "original_text": "\n    sleep 5 hours\n    steps 2500\n    workout 15\n    blood pressure 150/95\n    sugar level 160\n    cholesterol 260\n    ",
+    "cleaned_text": "sleep 5 hours steps 2500 workout 15 blood pressure 150 95 sugar level 160 cholesterol 260",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "5 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:14:08.893524"
+  },
+  {
+    "original_text": "\n    sleep 5 hours\n    steps 2500\n    workout 15\n    blood pressure 150/95\n    sugar level 160\n    cholesterol 260\n    ",
+    "cleaned_text": "sleep 5 hours steps 2500 workout 15 blood pressure 150 95 sugar level 160 cholesterol 260",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "5 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:14:49.489254"
+  },
+  {
+    "original_text": "\n    sleep 5 hours\n    steps 2500\n    workout 15\n    blood pressure 150/95\n    sugar level 160\n    cholesterol 260\n    ",
+    "cleaned_text": "sleep 5 hours steps 2500 workout 15 blood pressure 150 95 sugar level 160 cholesterol 260",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "5 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:14:49.538740"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:44:21.660275"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:44:21.722931"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:51:09.417849"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:51:09.520846"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:58:46.605422"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T00:58:46.675838"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T01:14:43.693384"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T01:14:43.766418"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T01:20:50.674598"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T01:20:50.729731"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T09:00:20.400809"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T09:00:20.448957"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T09:02:36.285532"
+  },
+  {
+    "original_text": "\n    sleep 12 hours\n    steps 9000\n    workout 120\n    blood pressure 120/80\n    sugar level 120\n    cholesterol 240\n    ",
+    "cleaned_text": "sleep 12 hours steps 9000 workout 120 blood pressure 120 80 sugar level 120 cholesterol 240",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "12 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T09:02:36.340680"
+  },
+  {
+    "original_text": "\n    sleep 5 hours\n    steps 2500\n    workout 15\n    blood pressure 150/95\n    sugar level 160\n    cholesterol 260\n    ",
+    "cleaned_text": "sleep 5 hours steps 2500 workout 15 blood pressure 150 95 sugar level 160 cholesterol 260",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "5 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T09:03:30.780159"
+  },
+  {
+    "original_text": "\n    sleep 5 hours\n    steps 2500\n    workout 15\n    blood pressure 150/95\n    sugar level 160\n    cholesterol 260\n    ",
+    "cleaned_text": "sleep 5 hours steps 2500 workout 15 blood pressure 150 95 sugar level 160 cholesterol 260",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "5 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T09:03:30.830648"
+  },
+  {
+    "original_text": "\n    sleep 7 hours\n    steps 6000\n    workout 30\n    blood pressure 110/70\n    sugar level 90\n    cholesterol 180\n    ",
+    "cleaned_text": "sleep 7 hours steps 6000 workout 30 blood pressure 110 70 sugar level 90 cholesterol 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "7 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T09:03:46.396572"
+  },
+  {
+    "original_text": "\n    sleep 7 hours\n    steps 6000\n    workout 30\n    blood pressure 110/70\n    sugar level 90\n    cholesterol 180\n    ",
+    "cleaned_text": "sleep 7 hours steps 6000 workout 30 blood pressure 110 70 sugar level 90 cholesterol 180",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "7 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T09:03:46.441414"
   }
 ]

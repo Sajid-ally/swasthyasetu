@@ -9,8 +9,10 @@ const FamilyTreeView = ({ members = [], onAddMember }) => {
       title="Family Tree"
       subtitle="Manage linked family members and inherited health connections"
       icon={Users}
-      action={
-        <ActionButton variant="secondary" size="sm" onClick={onAddMember}>
+
+      // ✅ FIXED HERE
+      rightContent={
+        <ActionButton variant="secondary" onClick={onAddMember}>
           <Plus size={16} />
           Add Member
         </ActionButton>
