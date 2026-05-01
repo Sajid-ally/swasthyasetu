@@ -1,523 +1,773 @@
+import { useEffect, useMemo, useState } from "react";
 import {
-  TrendingUp,
-  HeartPulse,
-  Brain,
-  Moon,
-  Droplets,
   Activity,
+  Brain,
+  HeartPulse,
+  ClipboardList,
   BarChart3,
   Sparkles,
-  ChevronRight,
+  TrendingUp,
+  Moon,
+  Footprints,
+  Dumbbell,
+  Stethoscope,
   FileText,
-  Clock3,
   CheckCircle2,
+  Droplets,
+  X,
+  AlertTriangle,
   ShieldCheck,
-  Inbox,
+  Pill,
+  RefreshCcw,
 } from "lucide-react";
 
-const analysisStats = [
-  {
-    title: "Health Trend",
-    value: "+12%",
-    subtitle: "Improved this month",
-    icon: TrendingUp,
-  },
-  {
-    title: "Heart Score",
-    value: "84",
-    subtitle: "Stable condition",
-    icon: HeartPulse,
-  },
-  {
-    title: "Mental Wellness",
-    value: "Good",
-    subtitle: "Stress under control",
-    icon: Brain,
-  },
-];
+import PageContainer from "../components/layout/PageContainer";
+import Loader from "../components/common/Loader";
+import EmptyState from "../components/common/EmptyState";
+import ErrorState from "../components/common/ErrorState";
+import { getAnalysisData } from "../services/analysisService";
+import { useUser } from "../context/UserContext";
 
-const chartData = [
-  {
-    label: "Heart Health",
-    value: 84,
-    icon: HeartPulse,
-    note: "Very good recovery trend",
-  },
-  {
-    label: "Sleep Quality",
-    value: 72,
-    icon: Moon,
-    note: "Needs slightly better consistency",
-  },
-  {
-    label: "Hydration",
-    value: 68,
-    icon: Droplets,
-    note: "Increase daily water intake",
-  },
-  {
-    label: "Physical Activity",
-    value: 91,
-    icon: Activity,
-    note: "Excellent performance level",
-  },
-];
+const getMetricIcon = (label = "") => {
+  const text = label.toLowerCase();
 
-const recentReports = [
-  {
-    title: "Weekly Wellness Report",
-    date: "15 Apr 2026",
-    status: "Completed",
-    summary: "Overall health indicators improved compared to last week.",
-  },
-  {
-    title: "Sleep Pattern Analysis",
-    date: "12 Apr 2026",
-    status: "Reviewed",
-    summary: "Sleep duration is healthy, but consistency can be improved.",
-  },
-  {
-    title: "Cardiac Activity Report",
-    date: "09 Apr 2026",
-    status: "Stable",
-    summary: "Heart rate and physical activity trends remain balanced.",
-  },
-];
+  if (text.includes("sleep")) return Moon;
+  if (text.includes("water")) return Droplets;
+  if (text.includes("step")) return Footprints;
+  if (text.includes("workout")) return Dumbbell;
+  if (text.includes("blood") || text.includes("pressure")) return HeartPulse;
+  if (text.includes("sugar")) return Pill;
 
-const healthTimeline = [
-  {
-    day: "Mon",
-    update: "Routine completed with strong hydration and sleep score.",
-  },
-  {
-    day: "Wed",
-    update: "Physical activity improved by 8% from previous session.",
-  },
-  {
-    day: "Fri",
-    update: "AI analysis suggested improving bedtime consistency.",
-  },
-  {
-    day: "Sun",
-    update: "Overall weekly wellness score increased significantly.",
-  },
-];
-
-const recommendations = [
-  "Maintain at least 7–8 hours of sleep daily",
-  "Drink 2.5L to 3L water regularly",
-  "Continue daily light workout or walking",
-  "Track stress and mental wellness weekly",
-];
-
-const glassCard =
-  "rounded-[32px] border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300";
-
-const hoverCard =
-  "rounded-2xl border border-white/10 bg-slate-900/40 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-slate-900/60";
-
-const primaryButton =
-  "rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 px-5 py-3 text-sm font-semibold text-slate-950 shadow-lg transition duration-300 hover:-translate-y-0.5 hover:shadow-cyan-500/20";
-
-const secondaryButton =
-  "rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:border-cyan-400/30 hover:bg-white/10";
-
-const sectionBadgeClass =
-  "inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300";
-
-const getProgressWidth = (value) => `${value}%`;
-
-const ShimmerBlock = ({ className = "" }) => {
-  return <div className={`animate-pulse rounded-2xl bg-white/10 ${className}`} />;
+  return Activity;
 };
 
-const EmptyState = ({
-  title = "No data available",
-  description = "There is currently no information to display here.",
-}) => {
+const getMetricProgress = (label = "", value = "") => {
+  const text = label.toLowerCase();
+  const raw = String(value);
+  const num = parseInt(raw);
+
+  if (text.includes("sleep")) {
+    if (!num) return 0;
+    return Math.min((num / 8) * 100, 100);
+  }
+
+  if (text.includes("water")) {
+    if (!num) return 0;
+    return Math.min((num / 4) * 100, 100);
+  }
+
+  if (text.includes("step")) {
+    if (!num) return 0;
+    return Math.min((num / 10000) * 100, 100);
+  }
+
+  if (text.includes("workout")) {
+    if (!num) return 0;
+    return Math.min((num / 120) * 100, 100);
+  }
+
+  if (text.includes("blood") || text.includes("pressure")) {
+    return 75;
+  }
+
+  if (text.includes("sugar")) {
+    return 70;
+  }
+
+  return 60;
+};
+
+const formatReportType = (value = "") => {
+  return value.replaceAll("_", " ") || "Medical Report";
+};
+
+const formatDate = (value) => {
+  if (!value) return "Date not available";
+
+  try {
+    return new Date(value).toLocaleString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  } catch {
+    return value;
+  }
+};
+
+const getFindingVariant = (status = "") => {
+  const safe = status.toLowerCase();
+
+  if (safe.includes("normal")) {
+    return "border-emerald-500/20 bg-emerald-500/10 text-emerald-200";
+  }
+
+  if (
+    safe.includes("attention") ||
+    safe.includes("high") ||
+    safe.includes("low")
+  ) {
+    return "border-yellow-500/20 bg-yellow-500/10 text-yellow-200";
+  }
+
+  return "border-white/10 bg-white/[0.04] text-slate-300";
+};
+
+const DetailModal = ({ title, children, onClose }) => {
+  if (!title) return null;
+
   return (
-    <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-white/10 bg-white/5 px-6 py-12 text-center">
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-400/10 text-cyan-300">
-        <Inbox size={24} />
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/80 px-4 backdrop-blur-sm">
+      <div className="max-h-[88vh] w-full max-w-3xl overflow-y-auto rounded-[2rem] border border-white/10 bg-[#071127] p-6 shadow-2xl shadow-black/50">
+        <div className="mb-5 flex items-start justify-between gap-4 border-b border-white/10 pb-4">
+          <div>
+            <h2 className="text-xl font-bold text-white">{title}</h2>
+            <p className="mt-1 text-sm text-slate-400">
+              Detailed analysis information
+            </p>
+          </div>
+
+          <button
+            onClick={onClose}
+            className="rounded-2xl border border-white/10 bg-white/5 p-2 text-slate-400 transition hover:bg-white/10 hover:text-white"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        {children}
       </div>
-      <h3 className="mt-4 text-lg font-semibold text-white">{title}</h3>
-      <p className="mt-2 max-w-md text-sm leading-6 text-slate-400">
-        {description}
-      </p>
     </div>
   );
 };
 
 const AnalysisPage = () => {
-  const isLoading = false;
+  const { userId, user } = useUser();
+
+  const [analysisData, setAnalysisData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const [modal, setModal] = useState(null);
+
+  const loadAnalysis = async () => {
+    if (!userId) return;
+
+    try {
+      setLoading(true);
+      setError("");
+
+      const data = await getAnalysisData(userId);
+
+      if (!data) {
+        setAnalysisData(null);
+        setError("Failed to load analysis data.");
+        return;
+      }
+
+      if (data?.error) {
+        setAnalysisData(null);
+        setError(data.error);
+        return;
+      }
+
+      setAnalysisData(data);
+    } catch (err) {
+      console.error("Analysis fetch error:", err);
+      setAnalysisData(null);
+      setError("Failed to load analysis data.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadAnalysis();
+
+    const refreshHandler = () => loadAnalysis();
+
+    window.addEventListener("smart-add-updated", refreshHandler);
+    window.addEventListener("assistant-command-updated", refreshHandler);
+    window.addEventListener("timeline-updated", refreshHandler);
+
+    return () => {
+      window.removeEventListener("smart-add-updated", refreshHandler);
+      window.removeEventListener("assistant-command-updated", refreshHandler);
+      window.removeEventListener("timeline-updated", refreshHandler);
+    };
+  }, [userId]);
+
+  const metrics = analysisData?.metrics || [];
+  const recommendations = analysisData?.recommendations || [];
+  const issues = analysisData?.issues || [];
+  const score = analysisData?.score || null;
+  const summary = analysisData?.summary || null;
+  const condition = analysisData?.condition || null;
+  const reports = analysisData?.reports || [];
+  const reportInsights = analysisData?.report_insights || {};
+
+  const primaryCondition = condition?.description
+    ? condition.description.split(",")[0].trim()
+    : "No major issue";
+
+  const attentionPoints = reportInsights?.attention_points || [];
+  const abnormalFindings = reportInsights?.abnormal_findings || [];
+
+  const latestReport = useMemo(() => {
+    return reports?.[0] || null;
+  }, [reports]);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-950 px-4 py-6 text-white sm:px-6 lg:px-8">
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute left-[-120px] top-[-80px] h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl" />
-        <div className="absolute right-[-120px] top-[120px] h-80 w-80 rounded-full bg-blue-500/10 blur-3xl" />
-        <div className="absolute bottom-[-100px] left-[20%] h-72 w-72 rounded-full bg-indigo-500/10 blur-3xl" />
-      </div>
+    <PageContainer>
+      <div className="mx-auto max-w-7xl space-y-8">
+        <section className="relative overflow-hidden rounded-[2rem] border border-cyan-500/20 bg-gradient-to-br from-slate-900 via-slate-950 to-blue-950 p-8 shadow-2xl">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.15),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.12),transparent_35%)]" />
 
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute left-[8%] top-[18%] h-3 w-3 animate-pulse rounded-full bg-cyan-400/40" />
-        <div className="absolute right-[12%] top-[28%] h-2.5 w-2.5 animate-ping rounded-full bg-blue-400/30" />
-        <div className="absolute bottom-[22%] left-[18%] h-4 w-4 animate-pulse rounded-full bg-indigo-400/30" />
-        <div className="absolute bottom-[15%] right-[10%] h-3 w-3 animate-pulse rounded-full bg-emerald-400/30" />
-      </div>
-
-      <div className="relative z-10 mx-auto max-w-7xl space-y-8">
-        <div
-          className={`${glassCard} group relative overflow-hidden shadow-[0_20px_80px_rgba(0,0,0,0.35)] hover:border-cyan-400/20 sm:p-8`}
-        >
-          <div className="absolute -left-10 top-0 h-32 w-32 rounded-full bg-cyan-500/20 blur-3xl transition duration-500 group-hover:bg-cyan-500/30" />
-          <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-blue-500/20 blur-3xl transition duration-500 group-hover:bg-blue-500/30" />
-
-          <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-1.5 text-sm font-medium text-cyan-300 shadow-lg">
+          <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-2xl">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-300">
                 <Sparkles size={16} />
                 Smart Health Insights
               </div>
 
-              <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-                <span className="bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
-                  Analysis Dashboard
-                </span>
+              <h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl">
+                Analysis Dashboard
               </h1>
 
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-                View personalized insights, monitor improvement trends, and
-                understand your health patterns through clean visual analysis.
+              <p className="mt-4 text-lg leading-8 text-slate-300">
+                Personalized insights from routine, vitals, conditions, medicines,
+                and saved medical report findings.
               </p>
 
-              <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <button className={primaryButton}>Generate Report</button>
-                <button className={secondaryButton}>View Trends</button>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-300">
+                  Active user:{" "}
+                  <span className="font-semibold text-white">
+                    {user?.name || analysisData?.user?.name || userId}
+                  </span>
+                </div>
+
+                <button
+                  onClick={loadAnalysis}
+                  className="flex items-center gap-2 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:scale-[1.02]"
+                >
+                  <RefreshCcw size={16} />
+                  Refresh Analysis
+                </button>
               </div>
             </div>
 
-            <div className="self-start rounded-3xl border border-emerald-400/20 bg-emerald-400/10 p-4 text-emerald-300 shadow-xl">
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-400/15 ring-1 ring-emerald-300/10">
-                  <BarChart3 size={22} />
+            <div className="min-w-[260px] rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-5 backdrop-blur-sm">
+              <div className="flex items-center gap-4">
+                <div className="rounded-2xl bg-emerald-400/10 p-4 text-emerald-300">
+                  <BarChart3 size={28} />
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-emerald-200/70">
+                  <p className="text-xs uppercase tracking-[0.3em] text-emerald-200/70">
                     Status
                   </p>
-                  <p className="mt-1 text-sm font-semibold">Analysis Updated</p>
-                  <p className="text-xs text-emerald-200/70">
-                    Based on latest data
+                  <h3 className="mt-1 text-xl font-semibold text-emerald-300">
+                    {analysisData ? "Analysis Loaded" : "Waiting"}
+                  </h3>
+                  <p className="mt-1 text-sm text-slate-300">
+                    Based on logged-in user data
                   </p>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {analysisStats.map((item) => {
-            const Icon = item.icon;
+        {loading && <Loader text="Loading analysis data..." />}
 
-            return (
-              <div
-                key={item.title}
-                className="group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-cyan-400/30 hover:bg-white/10"
-              >
-                <div className="absolute right-0 top-0 h-24 w-24 rounded-full bg-cyan-400/10 blur-2xl transition-all duration-300 group-hover:bg-cyan-400/20" />
+        {!loading && error && (
+          <ErrorState title="Analysis Error" message={error} />
+        )}
 
-                <div className="relative z-10 flex items-start justify-between">
-                  <div className="space-y-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400/20 to-blue-500/20 text-cyan-300 shadow-lg ring-1 ring-white/10 transition duration-300 group-hover:scale-105">
-                      <Icon size={22} />
+        {!loading && !error && !analysisData && (
+          <EmptyState
+            title="No analysis loaded"
+            message="Login with a user profile to view health analysis."
+          />
+        )}
+
+        {!loading && !error && analysisData && (
+          <>
+            <section className="grid grid-cols-1 gap-6 md:grid-cols-4">
+              <div className="rounded-[2rem] border border-cyan-500/15 bg-gradient-to-br from-slate-900 to-slate-950 p-6">
+                <div className="mb-5 inline-flex rounded-2xl bg-cyan-500/10 p-4 text-cyan-300">
+                  <TrendingUp size={24} />
+                </div>
+                <p className="text-sm text-slate-400">Overall Score</p>
+                <h3 className="mt-2 text-5xl font-bold text-white">
+                  {score?.value ?? "--"}
+                </h3>
+                <p className="mt-2 text-lg font-medium text-slate-300">
+                  {score?.status || "Not available"}
+                </p>
+              </div>
+
+              <div className="rounded-[2rem] border border-cyan-500/15 bg-gradient-to-br from-slate-900 to-slate-950 p-6">
+                <div className="mb-5 inline-flex rounded-2xl bg-cyan-500/10 p-4 text-cyan-300">
+                  <HeartPulse size={24} />
+                </div>
+                <p className="text-sm text-slate-400">Health Focus</p>
+                <h3 className="mt-2 text-3xl font-bold text-white">
+                  {primaryCondition}
+                </h3>
+                <p className="mt-2 text-lg text-slate-400">Primary concern</p>
+              </div>
+
+              <div className="rounded-[2rem] border border-cyan-500/15 bg-gradient-to-br from-slate-900 to-slate-950 p-6">
+                <div className="mb-5 inline-flex rounded-2xl bg-cyan-500/10 p-4 text-cyan-300">
+                  <Brain size={24} />
+                </div>
+                <p className="text-sm text-slate-400">Issues Found</p>
+                <h3 className="mt-2 text-5xl font-bold text-white">
+                  {issues.length}
+                </h3>
+                <p className="mt-2 text-lg text-slate-400">
+                  Detected from analysis
+                </p>
+              </div>
+
+              <div className="rounded-[2rem] border border-purple-500/20 bg-gradient-to-br from-purple-950/60 to-slate-950 p-6">
+                <div className="mb-5 inline-flex rounded-2xl bg-purple-500/10 p-4 text-purple-300">
+                  <FileText size={24} />
+                </div>
+                <p className="text-sm text-slate-400">Saved Reports</p>
+                <h3 className="mt-2 text-5xl font-bold text-white">
+                  {reports.length}
+                </h3>
+                <p className="mt-2 text-lg text-slate-400">
+                  From timeline records
+                </p>
+              </div>
+            </section>
+
+            <section className="grid grid-cols-1 gap-6 xl:grid-cols-3">
+              <div className="rounded-[2rem] border border-white/10 bg-slate-900/70 p-6 xl:col-span-2">
+                <div className="mb-6 flex items-center justify-between">
+                  <div>
+                    <div className="mb-2 inline-flex rounded-full border border-cyan-400/20 bg-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-300">
+                      Performance
                     </div>
-
-                    <div>
-                      <p className="text-sm font-medium text-slate-300">
-                        {item.title}
-                      </p>
-                      <h3 className="mt-1 text-2xl font-bold text-white">
-                        {item.value}
-                      </h3>
-                      <p className="mt-1 text-sm text-slate-400">
-                        {item.subtitle}
-                      </p>
-                    </div>
+                    <h2 className="text-4xl font-bold text-white">
+                      Metrics Breakdown
+                    </h2>
+                    <p className="mt-2 text-slate-400">
+                      Backend-driven health metrics for the logged-in user.
+                    </p>
                   </div>
 
-                  <div className="flex items-center gap-1 text-sm font-medium text-cyan-300">
-                    Details
-                    <ChevronRight
-                      size={16}
-                      className="transition-transform duration-300 group-hover:translate-x-1"
-                    />
+                  <div className="rounded-full border border-cyan-400/20 bg-cyan-500/10 px-4 py-2 text-lg font-semibold text-cyan-300">
+                    Score: {score?.value ?? "--"}
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
 
-        <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
-          <div className={`${glassCard} xl:col-span-2`}>
-            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <div className={sectionBadgeClass}>Performance</div>
-                <h2 className="mt-3 text-2xl font-bold text-white">
-                  Health Performance Overview
-                </h2>
-                <p className="mt-1 text-sm text-slate-400">
-                  Your latest health indicators and wellness performance.
-                </p>
-              </div>
+                <div className="space-y-5">
+                  {metrics.map((item, index) => {
+                    const Icon = getMetricIcon(item.label);
+                    const progress = getMetricProgress(item.label, item.value);
 
-              <div className="rounded-2xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-300">
-                Monthly Summary
-              </div>
-            </div>
-
-            <div className="space-y-5">
-              {chartData.map((item) => {
-                const Icon = item.icon;
-
-                return (
-                  <div key={item.label} className={`group ${hoverCard}`}>
-                    <div className="mb-3 flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400/20 to-blue-500/20 text-cyan-300 ring-1 ring-white/10 transition duration-300 group-hover:scale-105">
-                          <Icon size={20} />
-                        </div>
-
-                        <div>
-                          <p className="text-sm font-semibold text-white">
-                            {item.label}
-                          </p>
-                          <p className="text-xs text-slate-400">{item.note}</p>
-                        </div>
-                      </div>
-
-                      <div className="text-right">
-                        <p className="text-lg font-bold text-cyan-300">
-                          {item.value}%
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="h-3 overflow-hidden rounded-full bg-slate-800">
+                    return (
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 transition-all duration-700"
-                        style={{ width: getProgressWidth(item.value) }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+                        key={index}
+                        className="rounded-[1.5rem] border border-white/10 bg-slate-950/60 p-4"
+                      >
+                        <div className="mb-4 flex items-center justify-between gap-4">
+                          <div className="flex items-center gap-4">
+                            <div className="rounded-2xl bg-cyan-500/10 p-3 text-cyan-300">
+                              <Icon size={22} />
+                            </div>
+                            <div>
+                              <h3 className="text-2xl font-semibold text-white">
+                                {item.label}
+                              </h3>
+                              <p className="text-sm text-slate-400">
+                                Current recorded value
+                              </p>
+                            </div>
+                          </div>
 
-          <div className={glassCard}>
-            <div className="mb-5">
-              <div className={sectionBadgeClass}>AI Insights</div>
-              <h2 className="mt-3 text-xl font-bold text-white">
-                Personalized Suggestions
-              </h2>
-              <p className="mt-1 text-sm text-slate-400">
-                Recommendations based on your recent patterns.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4 transition duration-300 hover:bg-emerald-400/15">
-                <p className="text-sm font-semibold text-emerald-300">
-                  Strong recovery
-                </p>
-                <p className="mt-1 text-sm leading-6 text-slate-300">
-                  Your heart health and physical activity are showing a steady
-                  positive trend this month.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-yellow-400/20 bg-yellow-400/10 p-4 transition duration-300 hover:bg-yellow-400/15">
-                <p className="text-sm font-semibold text-yellow-300">
-                  Sleep improvement needed
-                </p>
-                <p className="mt-1 text-sm leading-6 text-slate-300">
-                  Sleep quality is decent, but improving bedtime consistency can
-                  boost your recovery.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-cyan-400/20 bg-cyan-400/10 p-4 transition duration-300 hover:bg-cyan-400/15">
-                <p className="text-sm font-semibold text-cyan-300">
-                  Hydration reminder
-                </p>
-                <p className="mt-1 text-sm leading-6 text-slate-300">
-                  Increase water intake slightly to support metabolism and daily
-                  energy levels.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-6 rounded-2xl border border-white/10 bg-slate-900/50 p-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
-                Recommendation score
-              </p>
-              <h3 className="mt-2 text-3xl font-bold text-white">8.7/10</h3>
-              <p className="mt-2 text-sm text-slate-400">
-                Your current habits are good. Small improvements in sleep and
-                hydration can raise your overall wellness score.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
-          <div className={`${glassCard} xl:col-span-2`}>
-            <div className="mb-6 flex items-center justify-between">
-              <div>
-                <div className={sectionBadgeClass}>Reports</div>
-                <h2 className="mt-3 text-2xl font-bold text-white">
-                  Recent Reports
-                </h2>
-                <p className="mt-1 text-sm text-slate-400">
-                  Your latest generated analysis and health summaries.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-slate-900/50 px-4 py-2 text-sm text-slate-300">
-                {recentReports.length} Reports
-              </div>
-            </div>
-
-            {isLoading ? (
-              <div className="space-y-4">
-                <ShimmerBlock className="h-24 w-full" />
-                <ShimmerBlock className="h-24 w-full" />
-                <ShimmerBlock className="h-24 w-full" />
-              </div>
-            ) : recentReports.length === 0 ? (
-              <EmptyState
-                title="No reports found"
-                description="Generated reports will appear here once analysis is completed."
-              />
-            ) : (
-              <div className="space-y-4">
-                {recentReports.map((report, index) => (
-                  <div
-                    key={`${report.title}-${index}`}
-                    className="group rounded-2xl border border-white/10 bg-slate-900/40 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-slate-900/70"
-                  >
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                      <div className="flex items-start gap-4">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400/20 to-blue-500/20 text-cyan-300 ring-1 ring-white/10 transition duration-300 group-hover:scale-105">
-                          <FileText size={22} />
+                          <span className="text-3xl font-bold text-cyan-300">
+                            {item.value}
+                          </span>
                         </div>
 
-                        <div>
-                          <h3 className="text-base font-semibold text-white">
-                            {report.title}
-                          </h3>
-                          <p className="mt-1 text-sm leading-6 text-slate-400">
-                            {report.summary}
-                          </p>
-
-                          <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-slate-500">
-                            <span className="inline-flex items-center gap-1">
-                              <Clock3 size={14} />
-                              {report.date}
-                            </span>
-                            <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-emerald-300">
-                              {report.status}
-                            </span>
-                          </div>
+                        <div className="h-3 overflow-hidden rounded-full bg-slate-800">
+                          <div
+                            className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-indigo-500"
+                            style={{ width: `${progress}%` }}
+                          />
                         </div>
                       </div>
+                    );
+                  })}
+                </div>
+              </div>
 
-                      <button className="inline-flex self-start rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-300 transition hover:bg-cyan-400/20">
-                        <span className="flex items-center gap-1">
-                          View
-                          <ChevronRight
-                            size={16}
-                            className="transition-transform duration-300 group-hover:translate-x-1"
-                          />
-                        </span>
-                      </button>
+              <div className="rounded-[2rem] border border-white/10 bg-slate-900/70 p-6">
+                <div className="mb-2 inline-flex rounded-full border border-cyan-400/20 bg-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-300">
+                  AI Score
+                </div>
+
+                <h2 className="text-2xl font-bold text-white">
+                  Overall Health Score
+                </h2>
+
+                <p className="mt-2 text-slate-400">
+                  {score?.note || "Calculated from backend data"}
+                </p>
+
+                <div className="mt-6 rounded-[1.75rem] border border-white/10 bg-white/5 p-5">
+                  <p className="text-sm text-slate-400">Score Value</p>
+                  <h3 className="mt-2 text-6xl font-bold text-cyan-300">
+                    {score?.value ?? "--"}
+                  </h3>
+                  <p className="mt-1 text-xl font-semibold text-white">
+                    {score?.status || "Unknown"}
+                  </p>
+                </div>
+
+                <div className="mt-6 space-y-3">
+                  {issues.length > 0 ? (
+                    issues.map((issue, index) => (
+                      <div
+                        key={index}
+                        className="rounded-[1.25rem] border border-yellow-500/20 bg-yellow-500/10 p-4"
+                      >
+                        <p className="text-sm font-semibold text-yellow-300">
+                          Issue {index + 1}
+                        </p>
+                        <p className="mt-2 text-slate-200">{issue}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="rounded-[1.25rem] border border-emerald-500/20 bg-emerald-500/10 p-4 text-emerald-300">
+                      No critical issues found.
                     </div>
+                  )}
+                </div>
+              </div>
+            </section>
+
+            <section className="grid grid-cols-1 gap-6 xl:grid-cols-3">
+              <div className="rounded-[2rem] border border-white/10 bg-slate-900/70 p-6 xl:col-span-2">
+                <div className="mb-6 flex items-center justify-between">
+                  <div>
+                    <div className="mb-2 inline-flex rounded-full border border-purple-400/20 bg-purple-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-purple-300">
+                      Reports
+                    </div>
+                    <h2 className="text-4xl font-bold text-white">
+                      Report-Based Insights
+                    </h2>
+                    <p className="mt-2 text-slate-400">
+                      Medical report summaries and extracted findings from saved
+                      timeline records.
+                    </p>
+                  </div>
+
+                  <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-300">
+                    {reports.length} Reports
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  {reports.length === 0 ? (
+                    <EmptyState
+                      title="No saved reports found"
+                      message="Upload and save a report from the AI assistant to see report-based insights here."
+                    />
+                  ) : (
+                    reports.slice(0, 4).map((report, index) => (
+                      <div
+                        key={report.id || index}
+                        className="rounded-[1.5rem] border border-white/10 bg-slate-950/60 p-5"
+                      >
+                        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                          <div className="flex items-start gap-4">
+                            <div className="rounded-2xl bg-purple-500/10 p-4 text-purple-300">
+                              <FileText size={24} />
+                            </div>
+
+                            <div>
+                              <h3 className="text-2xl font-semibold capitalize text-white">
+                                {formatReportType(report.report_type)}
+                              </h3>
+                              <p className="mt-2 leading-6 text-slate-400">
+                                {report.summary || "No summary available."}
+                              </p>
+
+                              <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+                                <span>{formatDate(report.created_at)}</span>
+                                <span className="rounded-full bg-purple-500/10 px-3 py-1 text-purple-300">
+                                  {report.source || "report_ai"}
+                                </span>
+                                <span className="rounded-full bg-yellow-500/10 px-3 py-1 text-yellow-300">
+                                  {report.possible_attention_points?.length || 0} attention
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <button
+                            onClick={() =>
+                              setModal({
+                                type: "report",
+                                title: formatReportType(report.report_type),
+                                data: report,
+                              })
+                            }
+                            className="rounded-2xl border border-purple-400/20 bg-purple-500/10 px-5 py-3 font-medium text-purple-300 transition hover:bg-purple-500/20"
+                          >
+                            View
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              <div className="rounded-[2rem] border border-white/10 bg-slate-900/70 p-6">
+                <div className="mb-2 inline-flex rounded-full border border-cyan-400/20 bg-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-300">
+                  Care Plan
+                </div>
+
+                <h2 className="text-2xl font-bold text-white">
+                  Recommendations
+                </h2>
+
+                <p className="mt-2 text-slate-400">
+                  Suggested actions generated from analysis engine.
+                </p>
+
+                <div className="mt-6 space-y-4">
+                  {recommendations.length > 0 ? (
+                    recommendations.map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex items-start gap-3 rounded-[1.25rem] border border-white/10 bg-slate-950/60 p-4"
+                      >
+                        <CheckCircle2
+                          size={18}
+                          className="mt-1 shrink-0 text-emerald-300"
+                        />
+                        <p className="text-slate-200">{item}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <EmptyState
+                      title="No recommendations"
+                      message="No care suggestions available."
+                    />
+                  )}
+                </div>
+
+                <div className="mt-6 rounded-[1.5rem] border border-blue-400/20 bg-blue-500/10 p-5">
+                  <div className="mb-2 flex items-center gap-2 text-blue-300">
+                    <Stethoscope size={18} />
+                    <span className="font-semibold">Wellness Protection</span>
+                  </div>
+                  <p className="text-sm leading-7 text-slate-300">
+                    These insights are for awareness only and are not a medical
+                    diagnosis.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section className="rounded-[2rem] border border-white/10 bg-slate-900/70 p-6">
+              <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                <div>
+                  <div className="mb-2 inline-flex rounded-full border border-yellow-400/20 bg-yellow-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-yellow-300">
+                    Report Attention
+                  </div>
+                  <h2 className="text-4xl font-bold text-white">
+                    Attention Points From Reports
+                  </h2>
+                  <p className="mt-2 text-slate-400">
+                    Extracted from medical report key findings.
+                  </p>
+                </div>
+
+                <button
+                  onClick={() =>
+                    setModal({
+                      type: "attention",
+                      title: "All Attention Findings",
+                      data: abnormalFindings,
+                    })
+                  }
+                  className="rounded-2xl border border-yellow-400/20 bg-yellow-500/10 px-5 py-3 font-medium text-yellow-300 transition hover:bg-yellow-500/20"
+                >
+                  View All
+                </button>
+              </div>
+
+              {attentionPoints.length === 0 ? (
+                <div className="rounded-[1.5rem] border border-emerald-500/20 bg-emerald-500/10 p-5 text-emerald-200">
+                  <div className="flex items-center gap-3">
+                    <ShieldCheck size={22} />
+                    <span>No report attention points detected.</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-wrap gap-3">
+                  {attentionPoints.map((point, index) => (
+                    <span
+                      key={`${point}-${index}`}
+                      className="rounded-full border border-yellow-500/20 bg-yellow-500/10 px-4 py-2 text-sm font-semibold text-yellow-200"
+                    >
+                      {point}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </section>
+
+            <section className="rounded-[2rem] border border-white/10 bg-slate-900/70 p-6">
+              <div className="mb-6">
+                <div className="mb-2 inline-flex rounded-full border border-cyan-400/20 bg-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-300">
+                  Timeline
+                </div>
+                <h2 className="text-4xl font-bold text-white">
+                  Metrics Timeline View
+                </h2>
+                <p className="mt-2 text-slate-400">
+                  Backend-driven breakdown of latest health metrics.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+                {metrics.map((item, index) => (
+                  <div
+                    key={index}
+                    className="rounded-[1.5rem] border border-white/10 bg-slate-950/60 p-5"
+                  >
+                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-cyan-500/10 text-cyan-300">
+                      {index + 1}
+                    </div>
+                    <h3 className="text-2xl font-semibold text-cyan-300">
+                      M{index + 1}
+                    </h3>
+                    <p className="mt-3 text-lg text-white">{item.label}</p>
+                    <p className="mt-2 text-slate-400">{item.value}</p>
                   </div>
                 ))}
               </div>
-            )}
-          </div>
+            </section>
+          </>
+        )}
+      </div>
 
-          <div className={glassCard}>
-            <div className="mb-5">
-              <div className={sectionBadgeClass}>Care Plan</div>
-              <h2 className="mt-3 text-xl font-bold text-white">
-                Recommendations
-              </h2>
-              <p className="mt-1 text-sm text-slate-400">
-                Suggested actions to improve overall wellness.
+      {modal?.type === "report" && (
+        <DetailModal
+          title={modal.title}
+          onClose={() => setModal(null)}
+        >
+          <div className="space-y-5">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+              <p className="text-sm font-semibold text-slate-400">Summary</p>
+              <p className="mt-2 leading-7 text-white">
+                {modal.data.summary || "No summary available."}
               </p>
             </div>
 
-            <div className="space-y-4">
-              {recommendations.map((item, index) => (
+            {modal.data.possible_attention_points?.length ? (
+              <div className="rounded-2xl border border-yellow-500/20 bg-yellow-500/10 p-4">
+                <p className="mb-3 flex items-center gap-2 text-sm font-bold text-yellow-200">
+                  <AlertTriangle size={16} />
+                  Attention Points
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {modal.data.possible_attention_points.map((point, index) => (
+                    <span
+                      key={index}
+                      className="rounded-full bg-yellow-500/15 px-3 py-1 text-xs font-semibold text-yellow-100"
+                    >
+                      {point}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
+            <div className="grid gap-3 md:grid-cols-2">
+              {(modal.data.key_findings || []).map((finding, index) => (
                 <div
-                  key={`${item}-${index}`}
-                  className="flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-900/40 p-4 transition duration-300 hover:border-emerald-400/20 hover:bg-slate-900/60"
+                  key={index}
+                  className={`rounded-2xl border p-4 ${getFindingVariant(
+                    finding.status
+                  )}`}
                 >
-                  <div className="mt-0.5 text-emerald-300">
-                    <CheckCircle2 size={18} />
+                  <div className="mb-2 flex items-start justify-between gap-3">
+                    <p className="font-bold text-white">
+                      {finding.name || "Finding"}
+                    </p>
+                    <span className="rounded-full bg-black/20 px-2 py-1 text-[10px] uppercase">
+                      {finding.status || "unknown"}
+                    </span>
                   </div>
-                  <p className="text-sm leading-6 text-slate-300">{item}</p>
+
+                  <p className="text-lg font-bold">
+                    {finding.value || "--"} {finding.unit || ""}
+                  </p>
+
+                  {finding.note ? (
+                    <p className="mt-2 text-xs leading-5 opacity-80">
+                      {finding.note}
+                    </p>
+                  ) : null}
                 </div>
               ))}
             </div>
 
-            <div className="mt-6 rounded-2xl border border-blue-400/20 bg-blue-400/10 p-4">
-              <div className="flex items-center gap-2 text-blue-300">
-                <ShieldCheck size={18} />
-                <p className="text-sm font-semibold">Wellness Protection</p>
-              </div>
-              <p className="mt-2 text-sm leading-6 text-slate-300">
-                Following these recommendations regularly can help maintain
-                stable health scores and reduce future risk factors.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className={glassCard}>
-          <div className="mb-6">
-            <div className={sectionBadgeClass}>Timeline</div>
-            <h2 className="mt-3 text-2xl font-bold text-white">
-              Weekly Health Timeline
-            </h2>
-            <p className="mt-1 text-sm text-slate-400">
-              A quick view of your key wellness milestones this week.
+            <p className="rounded-2xl border border-yellow-500/20 bg-yellow-500/10 p-4 text-xs leading-6 text-yellow-100">
+              {modal.data.disclaimer ||
+                "This is not a diagnosis. Please consult a qualified doctor."}
             </p>
           </div>
+        </DetailModal>
+      )}
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {healthTimeline.map((item, index) => (
-              <div
-                key={`${item.day}-${index}`}
-                className="relative rounded-2xl border border-white/10 bg-slate-900/40 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-slate-900/60"
-              >
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400/20 to-blue-500/20 text-cyan-300 ring-1 ring-white/10">
-                  {index + 1}
+      {modal?.type === "attention" && (
+        <DetailModal
+          title={modal.title}
+          onClose={() => setModal(null)}
+        >
+          {modal.data?.length ? (
+            <div className="grid gap-3 md:grid-cols-2">
+              {modal.data.map((finding, index) => (
+                <div
+                  key={index}
+                  className={`rounded-2xl border p-4 ${getFindingVariant(
+                    finding.status
+                  )}`}
+                >
+                  <p className="font-bold text-white">{finding.name}</p>
+                  <p className="mt-2 text-lg font-bold">
+                    {finding.value} {finding.unit}
+                  </p>
+                  <p className="mt-2 text-xs opacity-80">
+                    {finding.note || "No note available."}
+                  </p>
                 </div>
-                <p className="text-sm font-semibold text-cyan-300">{item.day}</p>
-                <p className="mt-2 text-sm leading-6 text-slate-400">
-                  {item.update}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+              ))}
+            </div>
+          ) : (
+            <EmptyState
+              title="No attention findings"
+              message="No abnormal report findings were detected."
+            />
+          )}
+        </DetailModal>
+      )}
+    </PageContainer>
   );
 };
 

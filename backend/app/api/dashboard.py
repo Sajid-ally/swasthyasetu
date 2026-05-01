@@ -11,47 +11,48 @@ router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
 # =========================
 def is_bp_high(bp: str) -> bool:
     try:
-        sys, dia = map(int, bp.split("/"))
+        sys, dia = map(int, str(bp).split("/"))
         return sys >= 140 or dia >= 90
     except:
         return False
 
 
 # =========================
-# HEALTH SCORE (FINAL FIXED)
+# HEALTH SCORE
 # =========================
 def calculate_health_score(member):
     score = 100
+    penalty = 0
 
     routine = member.get("routine", {})
     vitals = member.get("vitals", {})
     lifestyle = member.get("lifestyle", {})
 
-    sleep = routine.get("sleep_hours", 0)
-    steps = routine.get("steps", 0)
-    workout = routine.get("workout_minutes", 0)
+    sleep = routine.get("sleep_hours", 0) or 0
+    steps = routine.get("steps", 0) or 0
+    workout = routine.get("workout_minutes", 0) or 0
 
-    sugar = vitals.get("sugar_level", 0)
+    sugar = vitals.get("sugar_level", 0) or 0
     bp = vitals.get("bp", "")
-    cholesterol = vitals.get("cholesterol", 0)
+    cholesterol = vitals.get("cholesterol", 0) or 0
 
     smoking = lifestyle.get("smoking", False)
-    penalty=0
+
     # Sleep
     if sleep < 5:
-        penalty +=15
+        penalty += 15
     elif sleep < 6:
-        penalty -= 10
+        penalty += 10
     elif sleep < 7:
-        penalty -= 5
+        penalty += 5
     elif sleep > 10:
-        penalty += 5  # oversleep
+        penalty += 5
 
     # Steps
     if steps < 3000:
         penalty += 15
     elif steps < 6000:
-        penalty -= 8
+        penalty += 8
 
     # Workout
     if workout < 20:
@@ -59,7 +60,7 @@ def calculate_health_score(member):
     elif workout < 40:
         penalty += 5
     elif workout > 120:
-        penalty += 5  # overtraining
+        penalty += 5
 
     # BMI
     height = member.get("height_cm")
@@ -89,8 +90,10 @@ def calculate_health_score(member):
     # Smoking
     if smoking:
         penalty += 15
-    penalty=min(penalty, 70 )  # cap max penalty
-    final_score =100 - penalty
+
+    penalty = min(penalty, 70)
+    final_score = score - penalty
+
     return max(final_score, 0)
 
 
@@ -101,23 +104,25 @@ def get_risk_alerts(member):
     vitals = member.get("vitals", {})
 
     bp = vitals.get("bp", "")
-    sugar = vitals.get("sugar_level", 0)
-    cholesterol = vitals.get("cholesterol", 0)
+    sugar = vitals.get("sugar_level", 0) or 0
+    cholesterol = vitals.get("cholesterol", 0) or 0
 
     return {
         "blood_pressure": "high" if is_bp_high(bp) else "normal",
-
         "glucose": (
-            "high" if sugar > 180
-            else "medium" if sugar > 140
-            else "low"
+            "high"
+            if sugar > 180
+            else "medium"
+            if sugar > 140
+            else "normal"
         ),
-
         "cholesterol": (
-            "high" if cholesterol >= 240
-            else "medium" if cholesterol >= 200
-            else "low"
-        )
+            "high"
+            if cholesterol >= 240
+            else "medium"
+            if cholesterol >= 200
+            else "normal"
+        ),
     }
 
 
@@ -129,6 +134,7 @@ def get_dashboard(user_id: str):
     data = load_family_data()
 
     user = next((m for m in data["members"] if m["id"] == user_id), None)
+
     if not user:
         return {"error": "User not found"}
 
@@ -139,17 +145,18 @@ def get_dashboard(user_id: str):
 
     # FAMILY HISTORY
     family_history = []
-    for m in data["members"]:
-        if m["id"] != user_id:
-            for d in m.get("diseases", []):
-                family_history.append({
-                    "member": m["name"],
-                    "disease": d
-                })
 
-    # =========================
+    for member in data["members"]:
+        if member["id"] != user_id:
+            for disease in member.get("diseases", []):
+                family_history.append(
+                    {
+                        "member": member.get("name", "Unknown"),
+                        "disease": disease,
+                    }
+                )
+
     # ML INPUT
-    # =========================
     ml_text = f"""
     sleep {routine.get("sleep_hours", 0)} hours
     steps {routine.get("steps", 0)}
@@ -159,24 +166,31 @@ def get_dashboard(user_id: str):
     cholesterol {vitals.get("cholesterol", 0)}
     """
 
-    # =========================
-    # ML CALL
-    # =========================
     try:
-        ml_data = call_ml({
-            "text": ml_text,
-            "user_id": user_id
-        })
+        ml_data = call_ml(
+            {
+                "text": ml_text,
+                "user_id": user_id,
+            }
+        )
         print("ML DATA 👉", ml_data)
     except Exception as e:
         print("ML ERROR:", e)
         ml_data = {}
 
-    # =========================
-    # FINAL RESPONSE
-    # =========================
+    # IMPORTANT:
+    # We send both "routine" and "vitals" because dashboard_formatter.py reads these keys.
     raw_response = {
+        "id": user.get("id"),
         "name": user.get("name"),
+
+        "height_cm": user.get("height_cm"),
+        "weight_kg": user.get("weight_kg"),
+        "diseases": user.get("diseases", []),
+
+        "routine": routine,
+        "vitals": vitals,
+        "emergency": user.get("emergency", {}),
 
         "health_score": health_score,
 
@@ -184,7 +198,7 @@ def get_dashboard(user_id: str):
             "sleep": routine.get("sleep_hours", 0),
             "water": routine.get("water_intake", 0),
             "steps": routine.get("steps", 0),
-            "workout": routine.get("workout_minutes", 0)
+            "workout": routine.get("workout_minutes", 0),
         },
 
         "risk_alerts": get_risk_alerts(user),
@@ -192,8 +206,7 @@ def get_dashboard(user_id: str):
         "recent_activity": user.get("timeline", [])[-3:],
         "medications": user.get("medications", []),
         "family_history": family_history,
-
-        "ml_insights": ml_data
+        "ml_insights": ml_data,
     }
 
     return format_dashboard_response(raw_response)

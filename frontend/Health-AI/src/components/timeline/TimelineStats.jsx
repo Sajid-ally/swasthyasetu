@@ -1,89 +1,68 @@
-import { Search, Filter, Calendar } from "lucide-react";
-import SectionCard from "../common/SectionCard";
+import {
+  Activity,
+  AlertTriangle,
+  FileText,
+  Pill,
+  ListChecks,
+} from "lucide-react";
 
-const inputClass =
-  "w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition-all duration-200 placeholder:text-slate-500 focus:border-primary/40 focus:bg-white/10 focus:ring-2 focus:ring-primary/20";
+const statCards = [
+  {
+    key: "totalEvents",
+    label: "Total Events",
+    icon: Activity,
+    tone: "border-primary/20 bg-primary/10 text-primary",
+  },
+  {
+    key: "reports",
+    label: "Reports",
+    icon: FileText,
+    tone: "border-purple-500/20 bg-purple-500/10 text-purple-300",
+  },
+  {
+    key: "medicines",
+    label: "Medicines",
+    icon: Pill,
+    tone: "border-emerald-500/20 bg-emerald-500/10 text-emerald-300",
+  },
+  {
+    key: "routine",
+    label: "Routine",
+    icon: ListChecks,
+    tone: "border-cyan-500/20 bg-cyan-500/10 text-cyan-300",
+  },
+  {
+    key: "alerts",
+    label: "Attention Points",
+    icon: AlertTriangle,
+    tone: "border-yellow-500/20 bg-yellow-500/10 text-yellow-300",
+  },
+];
 
-const TimelineFilters = ({
-  search = "",
-  selectedType = "all",
-  selectedRange = "all",
-  onSearchChange,
-  onTypeChange,
-  onRangeChange,
-}) => {
+const TimelineStats = ({ stats = {} }) => {
   return (
-    <SectionCard
-      title="Timeline Filters"
-      subtitle="Search and refine health events across your timeline"
-      icon={Filter}
-    >
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-        <div>
-          <label className="mb-2 block text-sm font-medium text-slate-300">
-            Search events
-          </label>
-          <div className="relative">
-            <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
-              <Search size={16} />
-            </span>
-            <input
-              type="text"
-              value={search}
-              onChange={onSearchChange}
-              placeholder="Search by title, condition, note..."
-              className={`${inputClass} pl-11`}
-            />
-          </div>
-        </div>
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      {statCards.map((card) => {
+        const Icon = card.icon;
 
-        <div>
-          <label className="mb-2 block text-sm font-medium text-slate-300">
-            Event type
-          </label>
-          <div className="relative">
-            <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
-              <Filter size={16} />
-            </span>
-            <select
-              value={selectedType}
-              onChange={onTypeChange}
-              className={`${inputClass} pl-11`}
-            >
-              <option value="all" className="bg-slate-900 text-white">All events</option>
-              <option value="checkup" className="bg-slate-900 text-white">Checkups</option>
-              <option value="report" className="bg-slate-900 text-white">Reports</option>
-              <option value="medication" className="bg-slate-900 text-white">Medication</option>
-              <option value="alert" className="bg-slate-900 text-white">Alerts</option>
-              <option value="routine" className="bg-slate-900 text-white">Routine</option>
-            </select>
-          </div>
-        </div>
+        return (
+          <div
+            key={card.key}
+            className={`rounded-3xl border p-4 shadow-xl shadow-black/10 ${card.tone}`}
+          >
+            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10">
+              <Icon size={20} />
+            </div>
 
-        <div>
-          <label className="mb-2 block text-sm font-medium text-slate-300">
-            Time range
-          </label>
-          <div className="relative">
-            <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
-              <Calendar size={16} />
-            </span>
-            <select
-              value={selectedRange}
-              onChange={onRangeChange}
-              className={`${inputClass} pl-11`}
-            >
-              <option value="all" className="bg-slate-900 text-white">All time</option>
-              <option value="7days" className="bg-slate-900 text-white">Last 7 days</option>
-              <option value="30days" className="bg-slate-900 text-white">Last 30 days</option>
-              <option value="6months" className="bg-slate-900 text-white">Last 6 months</option>
-              <option value="1year" className="bg-slate-900 text-white">Last 1 year</option>
-            </select>
+            <p className="text-2xl font-bold text-white">
+              {stats[card.key] ?? 0}
+            </p>
+            <p className="mt-1 text-xs font-medium opacity-80">{card.label}</p>
           </div>
-        </div>
-      </div>
-    </SectionCard>
+        );
+      })}
+    </div>
   );
 };
 
-export default TimelineFilters;
+export default TimelineStats;

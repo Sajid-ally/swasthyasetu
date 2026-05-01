@@ -1,5 +1,13 @@
-import { analysisData } from "../utils/mockData";
+import axios from "axios";
 
-export const getAnalysisData = async () => {
-  return Promise.resolve(analysisData);
+const API_BASE_URL = "http://127.0.0.1:8000";
+
+export const getAnalysisData = async (userId) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/analysis/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching analysis:", error);
+    return null;
+  }
 };
