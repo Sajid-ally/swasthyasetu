@@ -75,7 +75,7 @@
             "routine": {
                 "sleep_hours": 7,
                 "water_intake": 17,
-                "steps": 9000,
+                "steps": 5000,
                 "workout_minutes": 120
             },
             "vitals": {
