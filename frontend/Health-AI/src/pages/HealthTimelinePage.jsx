@@ -32,7 +32,7 @@ const HealthTimelinePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
-  // 🔹 Fetch from backend
+  // ✅ FIXED FETCH
   useEffect(() => {
     const fetchTimeline = async () => {
       try {
@@ -40,7 +40,20 @@ const HealthTimelinePage = () => {
         setHasError(false);
 
         const data = await getTimelineData();
-        setEvents(data?.events || []);
+
+        // 🔥 FIX HERE (timeline instead of events)
+        const formatted = (data?.timeline || []).map((e, index) => ({
+          id: index,
+          title: e.title,
+          type: e.type,
+          date: e.date,
+          time: e.time,
+          doctor: e.doctor,
+          location: e.location,
+          description: e.notes || "",
+        }));
+
+        setEvents(formatted);
       } catch (error) {
         console.error("Timeline fetch failed:", error);
         setHasError(true);
@@ -107,24 +120,53 @@ const HealthTimelinePage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  // ✅ FIXED SUBMIT
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.title.trim() || !formData.type) return;
 
-    const newEvent = {
-      id: Date.now(),
+    const payload = {
       title: formData.title.trim(),
       type: formData.type,
-      date: formData.date.trim() || "Date not added",
-      time: formData.time.trim(),
-      doctor: formData.doctor.trim(),
-      location: formData.location.trim(),
-      description: formData.description.trim(),
+      date: formData.date
+        ? new Date(formData.date).toISOString().split("T")[0]
+        : "",
+      time: formData.time,
+      doctor: formData.doctor,
+      location: formData.location,
+      notes: formData.description,
     };
 
-    setEvents((prev) => [newEvent, ...prev]);
-    handleCloseModal();
+    try {
+      await fetch(`http://localhost:8000/timeline/user_1`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      // 🔥 REFETCH + FORMAT AGAIN
+      const data = await getTimelineData();
+
+      const formatted = (data?.timeline || []).map((e, index) => ({
+        id: index,
+        title: e.title,
+        type: e.type,
+        date: e.date,
+        time: e.time,
+        doctor: e.doctor,
+        location: e.location,
+        description: e.notes || "",
+      }));
+
+      setEvents(formatted);
+
+      handleCloseModal();
+    } catch (error) {
+      console.error("Error saving timeline event:", error);
+    }
   };
 
   // 🔹 Loading
@@ -154,28 +196,14 @@ const HealthTimelinePage = () => {
     );
   }
 
-  // 🔹 Empty
-  if (!events) {
-    return (
-      <PageContainer
-        title="Health Timeline"
-        subtitle="Track health events, reports, and changes across time"
-      >
-        <EmptyState
-          title="No timeline data available"
-          message="No events returned from server."
-        />
-      </PageContainer>
-    );
-  }
-
   return (
     <PageContainer
       title="Health Timeline"
       subtitle="Track health events, reports, and changes across time"
     >
       <div className="space-y-6">
-        {/* 🔹 Top Summary */}
+
+        {/* HEADER */}
         <div className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-lg">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-start gap-4">
@@ -225,7 +253,7 @@ const HealthTimelinePage = () => {
           </div>
         </div>
 
-        {/* 🔹 Filters */}
+        {/* Filters */}
         <TimelineFilters
           search={search}
           selectedType={selectedType}
@@ -235,7 +263,7 @@ const HealthTimelinePage = () => {
           onRangeChange={(e) => setSelectedRange(e.target.value)}
         />
 
-        {/* 🔹 Add Button */}
+        {/* Add Button */}
         <div className="flex justify-end">
           <button
             onClick={() => setIsModalOpen(true)}
@@ -245,13 +273,9 @@ const HealthTimelinePage = () => {
           </button>
         </div>
 
-        {/* 🔹 Stats */}
         <TimelineStats stats={stats} />
-
-        {/* 🔹 Timeline List */}
         <TimelineList events={filteredEvents} />
 
-        {/* 🔹 Modal */}
         <AddEventModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}

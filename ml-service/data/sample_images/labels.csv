@@ -1,10 +1,41 @@
 filename,expected_medicine,expected_dosage
-amlodipine.jpeg,amlodipine,
+amlodipine.jpeg,amlodipine,10 mg
 asthalin.jpeg,asthalin,
-enalapril.jpeg,enalapril,
-ibuprofen.jpeg,ibuprofen,
-loperamide.jpeg,loperamide,
+enalapril.jpeg,enalapril, 5 mg
+ibuprofen.jpeg,ibuprofen, 400 mg
+loperamide.jpeg,loperamide,  2 mg
 metformin.jpeg,metformin,
-pantoprazole.jpeg,pantoprazole,
-paracetamol.jpeg,paracetamol,
-rosuvastatin.jpeg,rosuvastatin,
+pantoprazole.jpeg,pantoprazole, 40 mg
+paracetamol.jpeg,paracetamol, 650 mg
+rosuvastatin.jpeg,rosuvastatin, 5 mg
+sumatriptan.jpeg,sumatriptan,
+sodiumvalproate.jpeg,sodiumvalproate,
+levodopa.jpeg,levodopa,
+donepezil.jpeg,donepezil,
+interferonbeta.jpeg,interferon,
+ceftriaxone.jpeg,ceftriaxone,
+fluoxetine.jpeg,fluoxetine,
+alprazolam.jpeg,alprazolam,
+aspirin.jpeg,aspirin,
+aspirinlowdose.jpeg,aspirinlowdose,
+amiodarone.jpeg,amiodarone,
+furosemide.jpeg,furosemide,
+nitroglycerin.jpeg,nitroglycerin,
+clopidogrel.jpeg,clopidogrel,
+metoprolol.jpeg,metoprolol,
+vancomycin.jpeg,vancomycin, 1 g
+azithromycin.jpeg,azithromycin,
+budesonide.jpeg,budesonide,
+rifampicin.jpeg,rifampicin, 150 mg
+dextromethorphan.jpeg,dextromethorphan,
+cisplatin.jpeg,cisplatin, 100 mg
+heparin.jpeg,heparin,
+furosemideinjection.jpeg,furosemideinjection,
+furosemidetab.jpeg,furosemidetab,
+pirfenidone.jpeg,perfenidone, 267 mg
+loratadine.jpeg,loratadine, 10 mg
+hydrocortisone.jpeg,hydrocortisone,
+clotrimazole.jpeg,clotrimazole, 50 g
+tacrolimus.jpeg,tacrolimus,20 g
+amoxycillin.jpeg,amoxycillin,
+aciclovir.jpeg,aciclovir,

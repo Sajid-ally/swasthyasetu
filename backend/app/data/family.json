@@ -1,197 +1,253 @@
 {
-  "family_id": "fam_001",
-  "members": [
-    {
-      "id": "user_1",
-      "name": "Nishant ",
-      "relation": "Self",
-      "gender": "Male",
-
-      "email": "newemail@gmail.com",
-      "phone_number": "+919999999999",
-      "date_of_birth": "2004-08-15",
-      "address": "Delhi",
-
-      "privacy": {
-        "doctor_access": true,
-        "family_access": false,
-        "access_logs": [
-          {
-            "action": "Doctor accessed medical report",
-            "time": "2 hours ago"
-          },
-          {
-            "action": "Data downloaded",
-            "time": "Yesterday"
-          }
-        ]
-      },
-
-      "routine": {
-        "sleep_hours": 8,
-        "water_intake": 3,
-        "steps": 9000,
-        "workout_minutes": 40,
-        "tasks_completed": 76,
-        "today_tasks": [
-          {
-            "title": "Morning medication",
-            "time": "08:00 AM",
-            "status": "completed"
-          }
-        ],
-        "weekly_progress": {
-          "monday": 5,
-          "tuesday": 4,
-          "wednesday": 2,
-          "thursday": 6,
-          "friday": 3
-        }
-      },
-
-      "timeline": [
+    "family_id": "fam_001",
+    "members": [
         {
-          "title": "Blood Test Report",
-          "type": "report",
-          "date": "2026-02-10",
-          "time": "09:00 AM",
-          "notes": "Normal report",
-          "doctor": "Lab",
-          "location": "Diagnostic Center"
+            "id": "user_1",
+            "name": "Nishant",
+            "relation": "Self",
+            "gender": "Male",
+            "age": 21,
+            "access": {
+                "user_2": "full",
+                "user_3": "limited"
+            },
+            "email": "nishant@gmail.com",
+            "phone_number": "+919999999999",
+            "date_of_birth": "2004-08-15",
+            "address": "Delhi",
+            "height_cm": 185,
+            "weight_kg": 70,
+            "lifestyle": {
+                "smoking": false
+            },
+            "routine": {
+                "sleep_hours": 12,
+                "water_intake": 3,
+                "steps": 9000,
+                "workout_minutes": 120,
+                "weekly_progress": {
+                    "monday": 5,
+                    "tuesday": 4,
+                    "wednesday": 2,
+                    "thursday": 6,
+                    "friday": 3
+                }
+            },
+            "timeline": [
+                {
+                    "title": "Blood Test Report",
+                    "type": "report",
+                    "time": "09:00 AM",
+                    "doctor": "Lab",
+                    "location": "Diagnostic Center",
+                    "notes": "All parameters normal"
+                },
+                {
+                    "title": "BP Checkup",
+                    "type": "activity",
+                    "time": "11:30 AM",
+                    "doctor": "Dr. Sharma",
+                    "location": "City Clinic",
+                    "notes": "BP slightly elevated"
+                },
+                {
+                    "title": "dentist",
+                    "type": "checkup",
+                    "date": "2026-04-22",
+                    "time": "11:00",
+                    "notes": "",
+                    "doctor": "Dr. Nishant",
+                    "location": "India"
+                },
+                {
+                    "title": "Back pain",
+                    "type": "checkup",
+                    "date": "2026-04-22",
+                    "time": "11:00",
+                    "notes": "",
+                    "doctor": "Dr. Yadav",
+                    "location": "India"
+                },
+                {
+                    "title": "Kidney checkup",
+                    "type": "checkup",
+                    "date": "2026-04-23",
+                    "time": "04:00",
+                    "notes": "",
+                    "doctor": "Dr. Nishant",
+                    "location": "India"
+                }
+            ],
+            "vitals": {
+                "bp": "120/80",
+                "sugar_level": 120,
+                "cholesterol": 240
+            },
+            "medications": [
+                "metformin"
+            ],
+            "diseases": [
+                "diabetes"
+            ],
+            "emergency": {
+                "blood_group": "B+"
+            }
         },
         {
-          "title": "BP Checkup",
-          "type": "checkup",
-          "date": "2026-04-18",
-          "time": "11:30 AM",
-          "notes": "BP slightly high",
-          "doctor": "Dr. Sharma",
-          "location": "City Clinic"
-        },
-        {
-          "title": "Evening Medication",
-          "type": "medication",
-          "date": "2026-04-19",
-          "time": "08:00 PM",
-          "notes": "Take BP medicine",
-          "doctor": "",
-          "location": "Home"
-        }
-      ],
-
-      "age": 20,
-      "height_cm": 172.0,
-      "weight_kg": 72.0,
-
-      "diseases": ["diabetes"],
-      "medications": ["metformin"],
-
-      "lifestyle": {
-        "sleep_hours": 4,
-        "exercise": "medium",
-        "smoking": false
-      },
-
-      "vitals": {
-        "bp": "150/80",
-        "sugar_level": 180
-      },
-
-      "emergency": {
-        "blood_group": "B+",
-        "allergies": [
-          {
-            "name": "Penicillin",
-            "description": "Avoid penicillin-based antibiotics"
-          },
-          {
-            "name": "Dust",
-            "description": "May trigger sneezing and breathing discomfort"
-          }
-        ],
-        "contact": "9876543210",
-        "primary_doctor": {
-          "name": "Dr. Nureen",
-          "specialization": "General Physician",
-          "phone": "+919012345678",
-          "hospital": "Ursala Hospital, Kanpur"
-        },
-        "emergency_contacts": [
-          {
-            "name": "Sunita Jaiswal",
-            "relation": "Mother",
-            "phone": "+919876543210",
-            "priority": 1
-          },
-          {
-            "name": "Rajesh Jaiswal",
+            "id": "user_2",
+            "name": "Sajid",
             "relation": "Father",
-            "phone": "+919876567655",
-            "priority": 2
-          }
-        ]
-      },
-
-      "access": {
-        "user_2": "full",
-        "user_3": "limited"
-      }
-    },
-
-    {
-      "id": "user_2",
-      "name": "Father",
-      "relation": "Father",
-      "gender": "Male",
-
-      "email": "father@example.com",
-      "phone_number": "+919111111111",
-      "date_of_birth": "1978-05-10",
-      "address": "Kanpur, Uttar Pradesh",
-
-      "privacy": {
-        "doctor_access": false,
-        "family_access": true,
-        "access_logs": []
-      },
-
-      "routine": {},
-      "timeline": [],
-
-      "age": 48,
-      "diseases": ["bp"],
-
-      "access": {
-        "user_1": "full"
-      }
-    },
-
-    {
-      "id": "user_3",
-      "name": "Mother",
-      "relation": "Mother",
-      "gender": "Female",
-
-      "email": "mother@example.com",
-      "phone_number": "+919222222222",
-      "date_of_birth": "1981-09-12",
-      "address": "Kanpur, Uttar Pradesh",
-
-      "privacy": {
-        "doctor_access": false,
-        "family_access": true,
-        "access_logs": []
-      },
-
-      "routine": {},
-      "timeline": [],
-
-      "age": 45,
-      "diseases": [],
-
-      "access": {
-        "user_1": "partial"
-      }
-    }
-  ]
+            "gender": "Male",
+            "age": 50,
+            "access": {
+                "user_1": "full"
+            },
+            "email": "sajid@gmail.com",
+            "phone_number": "+918888888888",
+            "date_of_birth": "2003-05-10",
+            "address": "Kanpur",
+            "height_cm": 175,
+            "weight_kg": 85,
+            "lifestyle": {
+                "smoking": true
+            },
+            "routine": {
+                "sleep_hours": 5,
+                "water_intake": 2,
+                "steps": 2500,
+                "workout_minutes": 15,
+                "weekly_progress": {
+                    "monday": 2,
+                    "tuesday": 3,
+                    "wednesday": 2,
+                    "thursday": 1,
+                    "friday": 2
+                }
+            },
+            "timeline": [
+                {
+                    "title": "Chest Pain Report",
+                    "type": "report",
+                    "time": "10:30 AM",
+                    "doctor": "Dr. Khan",
+                    "location": "City Hospital",
+                    "notes": "Mild chest discomfort"
+                },
+                {
+                    "title": "Smoking Consultation",
+                    "type": "activity",
+                    "time": "06:00 PM",
+                    "doctor": "Dr. Verma",
+                    "location": "Clinic",
+                    "notes": "Advised to quit smoking"
+                }
+            ],
+            "vitals": {
+                "bp": "150/95",
+                "sugar_level": 160,
+                "cholesterol": 260
+            },
+            "medications": [
+                "amlodipine"
+            ],
+            "diseases": [
+                "hypertension"
+            ],
+            "emergency": {
+                "blood_group": "O+"
+            }
+        },
+        {
+            "id": "user_3",
+            "name": "Ayesha",
+            "relation": "Sister",
+            "gender": "Female",
+            "age": 22,
+            "access": {
+                "user_1": "partial"
+            },
+            "email": "ayesha@gmail.com",
+            "phone_number": "+917777777777",
+            "date_of_birth": "2002-11-20",
+            "address": "Lucknow",
+            "height_cm": 160,
+            "weight_kg": 55,
+            "lifestyle": {
+                "smoking": false
+            },
+            "routine": {
+                "sleep_hours": 7,
+                "water_intake": 3,
+                "steps": 6000,
+                "workout_minutes": 30,
+                "weekly_progress": {
+                    "monday": 4,
+                    "tuesday": 5,
+                    "wednesday": 4,
+                    "thursday": 5,
+                    "friday": 4
+                }
+            },
+            "timeline": [
+                {
+                    "title": "Routine Checkup",
+                    "type": "activity",
+                    "time": "01:00 PM",
+                    "doctor": "Dr. Mehta",
+                    "location": "Health Center",
+                    "notes": "All vitals normal"
+                }
+            ],
+            "vitals": {
+                "bp": "110/70",
+                "sugar_level": 90,
+                "cholesterol": 180
+            },
+            "medications": [],
+            "diseases": [],
+            "emergency": {
+                "blood_group": "A+"
+            }
+        },
+        {
+            "id": "user_133ef0",
+            "name": "mohit",
+            "relation": "brother",
+            "gender": "Male",
+            "age": 28,
+            "diseases": [
+                "Hypertension",
+                "obesity"
+            ],
+            "access": {
+                "user_1": "partial"
+            }
+        },
+        {
+            "id": "user_1fe1bf",
+            "name": "Sayem",
+            "relation": "son",
+            "gender": "Male",
+            "age": 19,
+            "diseases": [
+                "fully fit"
+            ],
+            "access": {
+                "user_1": "limited"
+            }
+        },
+        {
+            "id": "user_815d3a",
+            "name": "Nureen",
+            "relation": "Sister",
+            "gender": "Female",
+            "age": 80,
+            "diseases": [
+                "Fully fit"
+            ],
+            "access": {
+                "user_1": "partial"
+            }
+        }
+    ]
 }

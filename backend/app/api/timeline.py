@@ -23,7 +23,7 @@ def add_timeline_event(user_id: str, event: dict):
                 "type": event.get("type"),  # checkup, report, medication, alert, routine
                 "date": event.get("date", str(datetime.now().date())),
                 "time": event.get("time", ""),
-                "notes": event.get("notes", ""),
+                "notes": event.get("description", ""),
                 "doctor": event.get("doctor", ""),
                 "location": event.get("location", "")
             }
