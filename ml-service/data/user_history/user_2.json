@@ -1,0 +1,242 @@
+[
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T21:19:29.107571"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T21:19:29.124913"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T21:22:58.800564"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T21:22:58.819307"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T23:47:38.691729"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T23:47:38.718712"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-24T09:39:50.313669"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-24T09:39:50.342436"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-24T09:44:27.024389"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-24T09:44:27.060812"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-30T19:23:37.708693"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-30T19:23:37.728032"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-30T19:35:07.452759"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-30T19:35:07.488037"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-30T19:36:07.010117"
+  },
+  {
+    "original_text": "\n    sleep 0 hours\n    steps 0\n    workout 0\n    blood pressure \n    sugar level 0\n    cholesterol 0\n    ",
+    "cleaned_text": "sleep 0 hours steps 0 workout 0 blood pressure sugar level 0 cholesterol 0",
+    "category": "routine",
+    "value": "poor sleep",
+    "extracted_data": {
+      "activity": "poor sleep",
+      "duration": "0 hours"
+    },
+    "confidence": 0.88,
+    "score": 0.5,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-30T19:36:07.039107"
+  }
+]

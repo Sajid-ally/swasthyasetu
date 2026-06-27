@@ -10,5 +10,19 @@
     "value": "low sleep",
     "confidence": 0.88,
     "timestamp": "2026-04-19T08:17:44.175672"
+  },
+  {
+    "original_text": "I take paracetamol 500mg after dinner",
+    "cleaned_text": "i take paracetamol 500mg after dinner",
+    "category": "unknown",
+    "value": "health_event_logged",
+    "extracted_data": {
+      "raw_text": "i take paracetamol 500mg after dinner"
+    },
+    "confidence": 0.15,
+    "score": 0.1,
+    "risk_level": "low",
+    "source": "text",
+    "timestamp": "2026-04-23T19:45:00.773323"
   }
 ]

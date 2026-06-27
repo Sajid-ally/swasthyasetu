@@ -1,101 +1,168 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Users, ShieldCheck, HeartPulse } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  Users,
+  ShieldCheck,
+  HeartPulse,
+  Plus,
+  UserRound,
+  LockKeyhole,
+  Activity,
+} from "lucide-react";
+
 import PageContainer from "../components/layout/PageContainer";
 import FamilyTreeView from "../components/family/FamilyTreeView";
 import AccessLegend from "../components/family/AccessLegend";
 import AddFamilyMemberModal from "../components/family/AddFamilyMemberModal";
 import InfoBadge from "../components/common/InfoBadge";
+import Loader from "../components/common/Loader";
+import ErrorState from "../components/common/ErrorState";
+
+import { useUser } from "../context/UserContext";
+import {
+  getFamilyData,
+  addFamilyMember,
+  deleteFamilyMember,
+} from "../services/dashboardApi";
+
+const emptyForm = {
+  name: "",
+  relation: "",
+  age: "",
+  gender: "",
+  accessLevel: "",
+  conditions: "",
+};
+
+const normalizeAccessLevel = (accessLevel) => {
+  if (accessLevel === "FULL_ACCESS") return "full";
+  if (accessLevel === "LIMITED_ACCESS") return "limited";
+  if (accessLevel === "EMERGENCY_ONLY") return "emergency";
+  return accessLevel || "limited";
+};
+
+const FamilyStat = ({ icon: Icon, label, value, tone = "primary" }) => {
+  const toneClass =
+    tone === "success"
+      ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-300"
+      : tone === "warning"
+      ? "border-yellow-500/20 bg-yellow-500/10 text-yellow-300"
+      : "border-primary/20 bg-primary/10 text-primary";
+
+  return (
+    <div className={`rounded-3xl border p-4 ${toneClass}`}>
+      <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10">
+        <Icon size={20} />
+      </div>
+      <p className="text-2xl font-bold text-white">{value}</p>
+      <p className="mt-1 text-xs font-medium opacity-80">{label}</p>
+    </div>
+  );
+};
 
 const FamilyTreePage = () => {
+  const { userId } = useUser();
+
   const [members, setMembers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    relation: "",
-    age: "",
-    gender: "",
-    accessLevel: "",
-    conditions: "",
-  });
+  const [formData, setFormData] = useState(emptyForm);
 
-  const userId = "user_1";
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [message, setMessage] = useState("");
+  const [deletingMemberId, setDeletingMemberId] = useState("");
 
-  useEffect(() => {
-    fetchFamilyData();
-  }, []);
+  const stats = useMemo(() => {
+    return {
+      total: members.length,
+      fullAccess: members.filter((m) => m.accessLevel === "full").length,
+      limited: members.filter((m) => m.accessLevel === "limited").length,
+      emergency: members.filter((m) => m.accessLevel === "emergency").length,
+    };
+  }, [members]);
 
   const fetchFamilyData = async () => {
+    if (!userId) return;
+
+    setIsLoading(true);
+    setHasError(false);
+
     try {
-      const res = await axios.get(`http://localhost:8000/family/${userId}`);
+      const res = await getFamilyData(userId);
+      const backendMembers = res?.familyTree?.members || [];
 
-      const backendMembers = res?.data?.familyTree?.members || [];
-
-      const formattedMembers = backendMembers.map((m) => ({
-  id: m.id,
-  name: m.name,
-  relation: m.relation,
-  age: m.age,
-  gender: m.gender,
-
-  // ✅ FIX (handle all cases safely)
-  accessLevel:
-    m?.accessLevel === "FULL_ACCESS"
-      ? "full"
-      : m?.accessLevel === "LIMITED_ACCESS"
-      ? "limited"
-      : m?.accessLevel === "EMERGENCY_ONLY"
-      ? "emergency"
-      : "limited",   // fallback
-
-  conditions: m?.healthConditions || [],
-}));
+      const formattedMembers = backendMembers.map((member) => ({
+        id: member.id,
+        name: member.name,
+        relation: member.relation || "Family",
+        age: member.age,
+        gender: member.gender || "Unknown",
+        accessLevel: normalizeAccessLevel(member.accessLevel),
+        conditions: Array.isArray(member.healthConditions)
+          ? member.healthConditions
+          : [],
+      }));
 
       setMembers(formattedMembers);
     } catch (err) {
-      console.error("Error fetching family data", err);
+      console.error("Family page load error:", err);
+      setHasError(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleOpenModal = () => setIsModalOpen(true);
+  useEffect(() => {
+    fetchFamilyData();
+  }, [userId]);
+
+  const handleOpenModal = () => {
+    setMessage("");
+    setIsModalOpen(true);
+  };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setFormData({
-      name: "",
-      relation: "",
-      age: "",
-      gender: "",
-      accessLevel: "",
-      conditions: "",
-    });
+    setFormData(emptyForm);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  // ✅ CONNECTED TO BACKEND
+  const validateForm = () => {
+    if (!formData.name.trim()) return "Name is required.";
+    if (!formData.relation.trim()) return "Relation is required.";
+    if (!formData.accessLevel) return "Access level is required.";
+    return "";
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const validationError = validateForm();
+
+    if (validationError) {
+      setMessage(validationError);
+      return;
+    }
+
+    setIsSaving(true);
+    setMessage("");
 
     try {
       const payload = {
         name: formData.name.trim(),
         relation: formData.relation.trim(),
         age: formData.age ? Number(formData.age) : null,
-        gender: formData.gender,
-        access:
-          formData.accessLevel === "full"
-            ? "full"
-            : formData.accessLevel === "limited"
-            ? "partial"
-            : "limited",
+        gender: formData.gender || "Unknown",
+        accessLevel: formData.accessLevel,
         conditions: formData.conditions
           ? formData.conditions
               .split(",")
@@ -104,43 +171,103 @@ const FamilyTreePage = () => {
           : [],
       };
 
-      await axios.post(
-        `http://localhost:8000/family/add/${userId}`,
-        payload
-      );
+      await addFamilyMember(userId, payload);
 
-      fetchFamilyData();
+      await fetchFamilyData();
       handleCloseModal();
+      setMessage("Family member added successfully ✅");
+
+      window.dispatchEvent(new Event("smart-add-updated"));
+      window.dispatchEvent(new Event("assistant-command-updated"));
+      window.dispatchEvent(new Event("timeline-updated"));
     } catch (err) {
-      console.error("Error adding member", err);
+      console.error("Error adding family member:", err);
+      setMessage("Failed to add family member. Please try again.");
+    } finally {
+      setIsSaving(false);
     }
   };
 
+  const handleDeleteMember = async (member) => {
+    if (!member?.id || !userId) return;
+
+    if (member.id === userId) {
+      setMessage("You cannot delete the currently active user.");
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete ${member.name || "this member"}?`
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      setDeletingMemberId(member.id);
+      setMessage("");
+
+      const res = await deleteFamilyMember(userId, member.id);
+
+      if (!res?.success) {
+        setMessage(res?.message || "Could not delete family member.");
+        return;
+      }
+
+      await fetchFamilyData();
+
+      setMessage("Family member deleted successfully ✅");
+
+      window.dispatchEvent(new Event("smart-add-updated"));
+      window.dispatchEvent(new Event("assistant-command-updated"));
+      window.dispatchEvent(new Event("timeline-updated"));
+    } catch (err) {
+      console.error("Delete family member error:", err);
+      setMessage("Failed to delete family member. Please try again.");
+    } finally {
+      setDeletingMemberId("");
+    }
+  };
+
+  if (isLoading) return <Loader text="Loading family data..." />;
+
+  if (hasError) {
+    return (
+      <ErrorState
+        title="Failed to load family page"
+        message="Family data could not be loaded from backend."
+      />
+    );
+  }
+
   return (
-    <PageContainer
-      title="Family Tree"
-      subtitle="Manage linked family members, inherited risks, and access permissions"
-    >
+    <PageContainer>
       <div className="space-y-6">
+        <section className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 shadow-2xl shadow-black/20">
+          <div className="pointer-events-none absolute right-0 top-0 h-44 w-44 rounded-full bg-primary/20 blur-[100px]" />
+          <div className="pointer-events-none absolute bottom-0 left-1/3 h-44 w-44 rounded-full bg-emerald-500/10 blur-[100px]" />
 
-        {/* HEADER */}
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-soft">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-
+          <div className="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-start gap-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-primary/10 text-primary">
-                <Users size={24} />
+              <div className="flex h-16 w-16 items-center justify-center rounded-3xl border border-primary/20 bg-primary/10 text-primary shadow-lg shadow-primary/10">
+                <Users size={30} />
               </div>
 
               <div>
-                <h2 className="text-xl font-semibold text-white">
+                <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-200">
+                  <ShieldCheck size={13} />
+                  Family health access enabled
+                </div>
+
+                <h2 className="text-2xl font-bold text-white">
                   Connected Family Network
                 </h2>
-                <p className="mt-1 text-sm text-slate-400">
-                  Track linked members, shared health history, and controlled access.
+
+                <p className="mt-1 max-w-2xl text-sm leading-6 text-slate-400">
+                  Manage linked members, shared health history, emergency access,
+                  and controlled permission levels.
                 </p>
 
-                <div className="mt-3 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-wrap gap-2">
                   <InfoBadge
                     label={`${members.length} Members Linked`}
                     variant="primary"
@@ -150,33 +277,75 @@ const FamilyTreePage = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                <div className="mb-1 flex items-center gap-2 text-slate-400">
-                  <ShieldCheck size={16} />
-                  <span className="text-xs">Access Status</span>
-                </div>
-                <p className="text-sm font-medium text-white">
-                  Controlled permissions
-                </p>
-              </div>
+            <button
+              onClick={handleOpenModal}
+              className="flex items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-primaryLight"
+            >
+              <Plus size={16} />
+              Add Member
+            </button>
+          </div>
+        </section>
 
-              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                <div className="mb-1 flex items-center gap-2 text-slate-400">
-                  <HeartPulse size={16} />
-                  <span className="text-xs">Family Insights</span>
-                </div>
-                <p className="text-sm font-medium text-white">
-                  Inherited risk tracking
+        <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <FamilyStat
+            icon={UserRound}
+            label="Total Members"
+            value={stats.total}
+          />
+          <FamilyStat
+            icon={ShieldCheck}
+            label="Full Access"
+            value={stats.fullAccess}
+            tone="success"
+          />
+          <FamilyStat
+            icon={LockKeyhole}
+            label="Limited Access"
+            value={stats.limited}
+            tone="primary"
+          />
+          <FamilyStat
+            icon={HeartPulse}
+            label="Emergency Only"
+            value={stats.emergency}
+            tone="warning"
+          />
+        </section>
+
+        <section className="rounded-3xl border border-white/10 bg-white/[0.04] p-4">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <Activity size={20} />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-white">
+                  Family risk tracking
+                </p>
+                <p className="text-xs text-slate-400">
+                  Useful for inherited diseases, emergency readiness, and shared records.
                 </p>
               </div>
             </div>
 
+            <InfoBadge label="Controlled Permissions" variant="success" />
           </div>
-        </div>
+        </section>
 
-        {/* ✅ BUTTON ALREADY INSIDE THIS */}
-        <FamilyTreeView members={members} onAddMember={handleOpenModal} />
+        {message ? (
+          <div className="rounded-2xl border border-primary/20 bg-primary/10 p-4 text-sm text-slate-200">
+            {message}
+          </div>
+        ) : null}
+
+        <FamilyTreeView
+          members={members}
+          onAddMember={handleOpenModal}
+          onDeleteMember={handleDeleteMember}
+          deletingMemberId={deletingMemberId}
+          activeUserId={userId}
+        />
 
         <AccessLegend />
 
@@ -186,8 +355,8 @@ const FamilyTreePage = () => {
           onSubmit={handleSubmit}
           formData={formData}
           onChange={handleChange}
+          isSaving={isSaving}
         />
-
       </div>
     </PageContainer>
   );

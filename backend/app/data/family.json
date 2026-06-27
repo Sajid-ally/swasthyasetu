@@ -1,250 +1,579 @@
 {
-    "family_id": "fam_001",
     "members": [
         {
             "id": "user_1",
             "name": "Nishant",
-            "relation": "Self",
-            "gender": "Male",
-            "age": 21,
-            "access": {
-                "user_2": "full",
-                "user_3": "limited"
-            },
             "email": "nishant@gmail.com",
-            "phone_number": "+919999999999",
-            "date_of_birth": "2004-08-15",
-            "address": "Delhi",
-            "height_cm": 185,
-            "weight_kg": 70,
-            "lifestyle": {
-                "smoking": false
-            },
-            "routine": {
-                "sleep_hours": 12,
-                "water_intake": 3,
-                "steps": 9000,
-                "workout_minutes": 120,
-                "weekly_progress": {
-                    "monday": 5,
-                    "tuesday": 4,
-                    "wednesday": 2,
-                    "thursday": 6,
-                    "friday": 3
+            "phone_number": "9876543210",
+            "date_of_birth": "1979-05-12",
+            "age": 45,
+            "address": "Kanpur, India",
+            "height_cm": 175,
+            "weight_kg": 78,
+            "diseases": [
+                "hypertension",
+                "high bp"
+            ],
+            "medications": [
+                {
+                    "name": "paracetamol",
+                    "dosage": "1 tablet",
+                    "time": "After meal",
+                    "status": "pending"
+                },
+                {
+                    "name": "crocin",
+                    "dosage": "500mg",
+                    "time": "after dinner",
+                    "status": "pending"
+                },
+                {
+                    "name": "slept",
+                    "dosage": "Not specified",
+                    "time": "Not specified",
+                    "status": "pending"
+                },
+                {
+                    "name": "slept",
+                    "dosage": "Not specified",
+                    "time": "after lunch",
+                    "status": "pending"
+                },
+                {
+                    "name": "paracetamol",
+                    "dosage": "600mg",
+                    "time": "night",
+                    "status": "pending"
+                },
+                {
+                    "name": "dolo",
+                    "dosage": "600mg",
+                    "time": "morning",
+                    "status": "pending"
+                },
+                {
+                    "name": "nishat",
+                    "dosage": "600mg",
+                    "time": "night",
+                    "status": "pending"
+                },
+                {
+                    "name": "dolo",
+                    "dosage": "650mg",
+                    "time": "after dinner",
+                    "status": "pending",
+                    "symptom": "headache"
+                },
+                {
+                    "name": "paracetamol",
+                    "dosage": "500mg",
+                    "time": "after dinner",
+                    "status": "pending",
+                    "source": "image_ocr"
                 }
+            ],
+            "routine": {
+                "sleep_hours": 7,
+                "water_intake": 17,
+                "steps": 9000,
+                "workout_minutes": 120
             },
+            "vitals": {
+                "bp": "150/95",
+                "sugar_level": 61
+            },
+            "emergency": {
+                "blood_group": "B+",
+                "allergies": [
+                    "dust"
+                ],
+                "contact": "9876543210"
+            },
+            "last_ai_summary": "Poor sleep pattern detected | High blood pressure detected",
             "timeline": [
                 {
-                    "title": "Blood Test Report",
-                    "type": "report",
-                    "time": "09:00 AM",
-                    "doctor": "Lab",
-                    "location": "Diagnostic Center",
-                    "notes": "All parameters normal"
+                    "id": "report_20260501000743",
+                    "type": "medical_report",
+                    "report_type": "annual_health_summary",
+                    "summary": "Annual health summary parsed. Some values may need attention or manual verification.",
+                    "suggestion": "Please consult a doctor for proper interpretation.",
+                    "key_findings": [
+                        {
+                            "name": "Blood Pressure",
+                            "value": "190/36 mmHg",
+                            "unit": "mmHg",
+                            "status": "attention_needed",
+                            "note": "Blood pressure value extracted from report. Please verify because OCR may confuse '/' or digits."
+                        },
+                        {
+                            "name": "Heart Rate",
+                            "value": "79 bpm",
+                            "unit": "bpm",
+                            "status": "normal",
+                            "note": ""
+                        },
+                        {
+                            "name": "Body Mass Index",
+                            "value": "27.8",
+                            "unit": "",
+                            "status": "attention_needed",
+                            "note": "BMI value extracted from report."
+                        },
+                        {
+                            "name": "Cholesterol",
+                            "value": "210 mg/dL",
+                            "unit": "mg/dL",
+                            "status": "attention_needed",
+                            "note": "Cholesterol value extracted from report."
+                        },
+                        {
+                            "name": "Hemoglobin A1c",
+                            "value": "6.2%",
+                            "unit": "%",
+                            "status": "attention_needed",
+                            "note": "A1c value extracted from report."
+                        }
+                    ],
+                    "possible_attention_points": [
+                        "Blood Pressure",
+                        "Hemoglobin A1c",
+                        "Cholesterol",
+                        "Body Mass Index"
+                    ],
+                    "disclaimer": "This is not a diagnosis. Please consult a qualified doctor.",
+                    "source": "report_ai",
+                    "created_at": "2026-05-01T00:07:43.632564"
                 },
                 {
-                    "title": "BP Checkup",
-                    "type": "activity",
-                    "time": "11:30 AM",
-                    "doctor": "Dr. Sharma",
-                    "location": "City Clinic",
-                    "notes": "BP slightly elevated"
+                    "id": "report_20260501070424",
+                    "type": "medical_report",
+                    "report_type": "annual_health_summary",
+                    "summary": "Patient has high blood pressure and may need medical attention.",
+                    "suggestion": "Please consult a doctor for proper interpretation.",
+                    "key_findings": [
+                        {
+                            "name": "Blood Pressure",
+                            "value": "190/36 mmHg",
+                            "unit": "mmHg",
+                            "status": "attention_needed",
+                            "note": "Blood pressure value extracted from report. Please verify because OCR may confuse '/' or digits."
+                        },
+                        {
+                            "name": "Heart Rate",
+                            "value": "79 bpm",
+                            "unit": "bpm",
+                            "status": "normal",
+                            "note": ""
+                        },
+                        {
+                            "name": "Body Mass Index",
+                            "value": "27.8",
+                            "unit": "",
+                            "status": "attention_needed",
+                            "note": "BMI value extracted from report."
+                        },
+                        {
+                            "name": "Cholesterol",
+                            "value": "210 mg/dL",
+                            "unit": "mg/dL",
+                            "status": "attention_needed",
+                            "note": "Cholesterol value extracted from report."
+                        },
+                        {
+                            "name": "Hemoglobin A1c",
+                            "value": "6.2%",
+                            "unit": "%",
+                            "status": "attention_needed",
+                            "note": "A1c value extracted from report."
+                        }
+                    ],
+                    "possible_attention_points": [
+                        "Body Mass Index",
+                        "Blood Pressure",
+                        "Cholesterol",
+                        "Hemoglobin A1c"
+                    ],
+                    "disclaimer": "This is not a diagnosis. Please consult a qualified doctor.",
+                    "source": "report_ai",
+                    "created_at": "2026-05-01T07:04:24.137287"
                 },
                 {
-                    "title": "dentist",
-                    "type": "checkup",
-                    "date": "2026-04-22",
-                    "time": "11:00",
-                    "notes": "",
-                    "doctor": "Dr. Nishant",
-                    "location": "India"
+                    "id": "report_20260501070509",
+                    "type": "medical_report",
+                    "report_type": "annual_health_summary",
+                    "summary": "Patient has hypertension and type 2 diabetes.",
+                    "suggestion": "Please consult a doctor for proper interpretation.",
+                    "key_findings": [
+                        {
+                            "name": "Blood Pressure",
+                            "value": "190/36 mmHg",
+                            "unit": "mmHg",
+                            "status": "attention_needed",
+                            "note": "Blood pressure value extracted from report. Please verify because OCR may confuse '/' or digits."
+                        },
+                        {
+                            "name": "Heart Rate",
+                            "value": "79 bpm",
+                            "unit": "bpm",
+                            "status": "normal",
+                            "note": ""
+                        },
+                        {
+                            "name": "Body Mass Index",
+                            "value": "27.8",
+                            "unit": "",
+                            "status": "attention_needed",
+                            "note": "BMI value extracted from report."
+                        },
+                        {
+                            "name": "Cholesterol",
+                            "value": "210 mg/dL",
+                            "unit": "mg/dL",
+                            "status": "attention_needed",
+                            "note": "Cholesterol value extracted from report."
+                        },
+                        {
+                            "name": "Hemoglobin A1c",
+                            "value": "6.2%",
+                            "unit": "%",
+                            "status": "attention_needed",
+                            "note": "A1c value extracted from report."
+                        }
+                    ],
+                    "possible_attention_points": [
+                        "Body Mass Index",
+                        "Blood Pressure",
+                        "Cholesterol",
+                        "Hemoglobin A1c"
+                    ],
+                    "disclaimer": "This is not a diagnosis. Please consult a qualified doctor.",
+                    "source": "report_ai",
+                    "created_at": "2026-05-01T07:05:09.512531"
                 },
                 {
-                    "title": "Back pain",
-                    "type": "checkup",
-                    "date": "2026-04-22",
-                    "time": "11:00",
-                    "notes": "",
-                    "doctor": "Dr. Yadav",
-                    "location": "India"
+                    "id": "report_20260501102617",
+                    "type": "medical_report",
+                    "report_type": "annual_health_summary",
+                    "summary": "Patient has high blood pressure and may need attention.",
+                    "suggestion": "Please consult a doctor for proper interpretation.",
+                    "key_findings": [
+                        {
+                            "name": "Blood Pressure",
+                            "value": "190/36 mmHg",
+                            "unit": "mmHg",
+                            "status": "attention_needed",
+                            "note": "Blood pressure value extracted from report. Please verify because OCR may confuse '/' or digits."
+                        },
+                        {
+                            "name": "Heart Rate",
+                            "value": "79 bpm",
+                            "unit": "bpm",
+                            "status": "normal",
+                            "note": ""
+                        },
+                        {
+                            "name": "Body Mass Index",
+                            "value": "27.8",
+                            "unit": "",
+                            "status": "attention_needed",
+                            "note": "BMI value extracted from report."
+                        },
+                        {
+                            "name": "Cholesterol",
+                            "value": "210 mg/dL",
+                            "unit": "mg/dL",
+                            "status": "attention_needed",
+                            "note": "Cholesterol value extracted from report."
+                        },
+                        {
+                            "name": "Hemoglobin A1c",
+                            "value": "6.2%",
+                            "unit": "%",
+                            "status": "attention_needed",
+                            "note": "A1c value extracted from report."
+                        }
+                    ],
+                    "possible_attention_points": [
+                        "Cholesterol",
+                        "Hemoglobin A1c",
+                        "Blood Pressure",
+                        "Body Mass Index"
+                    ],
+                    "disclaimer": "This is not a diagnosis. Please consult a qualified doctor.",
+                    "source": "report_ai",
+                    "created_at": "2026-05-01T10:26:17.133568"
                 },
                 {
-                    "title": "Kidney checkup",
-                    "type": "checkup",
-                    "date": "2026-04-23",
-                    "time": "04:00",
-                    "notes": "",
-                    "doctor": "Dr. Nishant",
-                    "location": "India"
+                    "id": "report_20260501102959",
+                    "type": "medical_report",
+                    "report_type": "annual_health_summary",
+                    "summary": "Patient has high blood pressure and may need attention.",
+                    "suggestion": "Please consult a doctor for proper interpretation.",
+                    "key_findings": [
+                        {
+                            "name": "Blood Pressure",
+                            "value": "190/36 mmHg",
+                            "unit": "mmHg",
+                            "status": "attention_needed",
+                            "note": "Blood pressure value extracted from report. Please verify because OCR may confuse '/' or digits."
+                        },
+                        {
+                            "name": "Heart Rate",
+                            "value": "79 bpm",
+                            "unit": "bpm",
+                            "status": "normal",
+                            "note": ""
+                        },
+                        {
+                            "name": "Body Mass Index",
+                            "value": "27.8",
+                            "unit": "",
+                            "status": "attention_needed",
+                            "note": "BMI value extracted from report."
+                        },
+                        {
+                            "name": "Cholesterol",
+                            "value": "210 mg/dL",
+                            "unit": "mg/dL",
+                            "status": "attention_needed",
+                            "note": "Cholesterol value extracted from report."
+                        },
+                        {
+                            "name": "Hemoglobin A1c",
+                            "value": "6.2%",
+                            "unit": "%",
+                            "status": "attention_needed",
+                            "note": "A1c value extracted from report."
+                        }
+                    ],
+                    "possible_attention_points": [
+                        "Cholesterol",
+                        "Hemoglobin A1c",
+                        "Blood Pressure",
+                        "Body Mass Index"
+                    ],
+                    "disclaimer": "This is not a diagnosis. Please consult a qualified doctor.",
+                    "source": "report_ai",
+                    "created_at": "2026-05-01T10:29:59.007747"
                 }
-            ],
-            "vitals": {
-                "bp": "120/80",
-                "sugar_level": 120,
-                "cholesterol": 240
-            },
-            "medications": [
-                "metformin"
-            ],
-            "diseases": [
-                "diabetes"
-            ],
-            "emergency": {
-                "blood_group": "B+"
-            }
+            ]
         },
         {
             "id": "user_2",
             "name": "Sajid",
-            "relation": "Father",
-            "gender": "Male",
-            "age": 50,
-            "access": {
-                "user_1": "full"
-            },
             "email": "sajid@gmail.com",
-            "phone_number": "+918888888888",
-            "date_of_birth": "2003-05-10",
-            "address": "Kanpur",
-            "height_cm": 175,
-            "weight_kg": 85,
-            "lifestyle": {
-                "smoking": true
-            },
-            "routine": {
-                "sleep_hours": 5,
-                "water_intake": 2,
-                "steps": 2500,
-                "workout_minutes": 15,
-                "weekly_progress": {
-                    "monday": 2,
-                    "tuesday": 3,
-                    "wednesday": 2,
-                    "thursday": 1,
-                    "friday": 2
-                }
-            },
-            "timeline": [
-                {
-                    "title": "Chest Pain Report",
-                    "type": "report",
-                    "time": "10:30 AM",
-                    "doctor": "Dr. Khan",
-                    "location": "City Hospital",
-                    "notes": "Mild chest discomfort"
-                },
-                {
-                    "title": "Smoking Consultation",
-                    "type": "activity",
-                    "time": "06:00 PM",
-                    "doctor": "Dr. Verma",
-                    "location": "Clinic",
-                    "notes": "Advised to quit smoking"
-                }
-            ],
-            "vitals": {
-                "bp": "150/95",
-                "sugar_level": 160,
-                "cholesterol": 260
-            },
-            "medications": [
-                "amlodipine"
-            ],
+            "phone_number": "9123456780",
+            "date_of_birth": "1975-03-10",
+            "age": 50,
+            "address": "Lucknow, India",
+            "height_cm": 170,
+            "weight_kg": 82,
             "diseases": [
                 "hypertension"
             ],
-            "emergency": {
-                "blood_group": "O+"
-            }
-        },
-        {
-            "id": "user_3",
-            "name": "Ayesha",
-            "relation": "Sister",
-            "gender": "Female",
-            "age": 22,
-            "access": {
-                "user_1": "partial"
-            },
-            "email": "ayesha@gmail.com",
-            "phone_number": "+917777777777",
-            "date_of_birth": "2002-11-20",
-            "address": "Lucknow",
-            "height_cm": 160,
-            "weight_kg": 55,
-            "lifestyle": {
-                "smoking": false
-            },
-            "routine": {
-                "sleep_hours": 7,
-                "water_intake": 3,
-                "steps": 6000,
-                "workout_minutes": 30,
-                "weekly_progress": {
-                    "monday": 4,
-                    "tuesday": 5,
-                    "wednesday": 4,
-                    "thursday": 5,
-                    "friday": 4
-                }
-            },
-            "timeline": [
-                {
-                    "title": "Routine Checkup",
-                    "type": "activity",
-                    "time": "01:00 PM",
-                    "doctor": "Dr. Mehta",
-                    "location": "Health Center",
-                    "notes": "All vitals normal"
-                }
-            ],
-            "vitals": {
-                "bp": "110/70",
-                "sugar_level": 90,
-                "cholesterol": 180
-            },
             "medications": [],
-            "diseases": [],
+            "routine": {},
+            "vitals": {},
             "emergency": {
                 "blood_group": "A+"
             }
         },
         {
-            "id": "user_133ef0",
-            "name": "mohit",
-            "relation": "brother",
-            "gender": "Male",
-            "age": 28,
+            "id": "user_3",
+            "name": "Mohit",
+            "email": "mohit@gmail.com",
+            "phone_number": "9988776655",
+            "date_of_birth": "1976-08-20",
+            "age": 48,
+            "address": "Delhi, India",
+            "height_cm": 168,
+            "weight_kg": 90,
             "diseases": [
-                "Hypertension",
+                "hypertension",
                 "obesity"
             ],
-            "access": {
-                "user_1": "partial"
+            "medications": [],
+            "routine": {},
+            "vitals": {},
+            "emergency": {
+                "blood_group": "O+"
             }
         },
         {
-            "id": "user_1fe1bf",
+            "id": "user_4",
             "name": "Sayem",
-            "relation": "son",
-            "gender": "Male",
-            "age": 19,
+            "email": "sayem@gmail.com",
+            "phone_number": "9000000001",
+            "date_of_birth": "2000-01-01",
+            "age": 25,
+            "address": "India",
+            "height_cm": 175,
+            "weight_kg": 70,
             "diseases": [
                 "fully fit"
             ],
-            "access": {
-                "user_1": "limited"
+            "medications": [],
+            "routine": {},
+            "vitals": {},
+            "emergency": {
+                "blood_group": "AB+"
             }
         },
         {
-            "id": "user_815d3a",
+            "id": "user_5",
             "name": "Nureen",
+            "email": "nureen@gmail.com",
+            "phone_number": "9000000002",
+            "date_of_birth": "2002-04-15",
+            "age": 22,
+            "address": "India",
+            "height_cm": 160,
+            "weight_kg": 55,
+            "diseases": [
+                "fully fit"
+            ],
+            "medications": [],
+            "routine": {},
+            "vitals": {},
+            "emergency": {
+                "blood_group": "B+"
+            }
+        },
+        {
+            "id": "user_6",
+            "name": "Raghav Kumar",
+            "email": "raghav@gmail.com",
+            "phone_number": "9000000003",
+            "date_of_birth": "2005-06-01",
+            "age": 19,
+            "address": "Kanpur, India",
+            "height_cm": 178,
+            "weight_kg": 72,
+            "diseases": [
+                "happy"
+            ],
+            "medications": [
+                {
+                    "name": "me",
+                    "dosage": "Not specified",
+                    "time": "Not specified",
+                    "status": "pending"
+                },
+                {
+                    "name": "dolo",
+                    "dosage": "650mg",
+                    "time": "after dinner",
+                    "status": "pending",
+                    "symptom": "headache"
+                },
+                {
+                    "name": "thi",
+                    "dosage": "500mg",
+                    "time": "night",
+                    "status": "pending"
+                },
+                {
+                    "name": "paracetamol",
+                    "dosage": "500mg",
+                    "time": "After death",
+                    "status": "pending",
+                    "source": "image_ocr"
+                }
+            ],
+            "routine": {
+                "sleep_hours": 7,
+                "water_intake": 3,
+                "steps": 5000
+            },
+            "vitals": {
+                "sugar_level": 160
+            },
+            "emergency": {
+                "blood_group": "O+"
+            },
+            "timeline": [
+                {
+                    "id": "report_20260501001237",
+                    "type": "medical_report",
+                    "report_type": "annual_health_summary",
+                    "summary": "Patient has high blood pressure and attention needed for Hemoglobin A1c.",
+                    "suggestion": "Please consult a doctor for proper interpretation.",
+                    "key_findings": [
+                        {
+                            "name": "Blood Pressure",
+                            "value": "190/36 mmHg",
+                            "unit": "mmHg",
+                            "status": "attention_needed",
+                            "note": "Blood pressure value extracted from report. Please verify because OCR may confuse '/' or digits."
+                        },
+                        {
+                            "name": "Heart Rate",
+                            "value": "79 bpm",
+                            "unit": "bpm",
+                            "status": "normal",
+                            "note": ""
+                        },
+                        {
+                            "name": "Body Mass Index",
+                            "value": "27.8",
+                            "unit": "",
+                            "status": "attention_needed",
+                            "note": "BMI value extracted from report."
+                        },
+                        {
+                            "name": "Cholesterol",
+                            "value": "210 mg/dL",
+                            "unit": "mg/dL",
+                            "status": "attention_needed",
+                            "note": "Cholesterol value extracted from report."
+                        },
+                        {
+                            "name": "Hemoglobin A1c",
+                            "value": "6.2%",
+                            "unit": "%",
+                            "status": "attention_needed",
+                            "note": "A1c value extracted from report."
+                        }
+                    ],
+                    "possible_attention_points": [
+                        "Blood Pressure",
+                        "Hemoglobin A1c",
+                        "Cholesterol",
+                        "Body Mass Index"
+                    ],
+                    "disclaimer": "This is not a diagnosis. Please consult a qualified doctor.",
+                    "source": "report_ai",
+                    "created_at": "2026-05-01T00:12:37.218762"
+                }
+            ]
+        },
+        {
+            "id": "user_c814e9",
+            "name": "Pratibha",
             "relation": "Sister",
             "gender": "Female",
-            "age": 80,
+            "age": 88,
             "diseases": [
-                "Fully fit"
+                "Full access"
             ],
+            "access": {
+                "user_1": "full"
+            }
+        },
+        {
+            "id": "user_cb94c2",
+            "name": "Rahul Kumar",
+            "relation": "brother",
+            "gender": "Other",
+            "age": 19,
+            "diseases": [
+                "Asthma",
+                "Allergy"
+            ],
+            "medications": [],
+            "routine": {},
+            "vitals": {},
+            "timeline": [],
             "access": {
                 "user_1": "partial"
             }

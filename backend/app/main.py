@@ -1,25 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# 🔥 CREATE APP FIRST
-app = FastAPI(
-    title="Health AI API",
-    version="1.0.0"
-)
-
-# 🔥 ADD CORS IMMEDIATELY AFTER APP
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",   # frontend
-        "http://127.0.0.1:5173"
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# 🔥 THEN IMPORT ROUTERS
 from app.api.dashboard import router as dashboard_router
 from app.api.smart_add import router as smart_add_router
 from app.api.family import router as family_router
@@ -30,28 +11,31 @@ from app.api.update import router as update_router
 from app.api.timeline import router as timeline_router
 from app.api.routine import router as routine_router
 from app.api.privacy import router as privacy_router
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-app = FastAPI()
+from app.api.analysis import router as analysis_router
+from app.api.assistant_command import router as assistant_command_router
+from app.api.auth import router as auth_router
+from app.api.voice_command import router as voice_command_router
+from app.api.image_command import router as image_command_router
+from app.api.report_command import router as report_command_router
 
-# CORS FIRST
+
+app = FastAPI(
+    title="Health AI Backend",
+    version="1.0.0"
+)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# IMPORT AFTER APP
-from app.api.dashboard import router as dashboard_router
-from app.api.smart_add import router as smart_add_router
-from app.api.profile import router as profile_router
-# 🔥 REGISTER ROUTES
-app.include_router(dashboard_router)
-app.include_router(smart_add_router)
-app.include_router(profile_router)
-
+app.include_router(auth_router)
 app.include_router(dashboard_router)
 app.include_router(smart_add_router)
 app.include_router(family_router)
@@ -62,6 +46,12 @@ app.include_router(update_router)
 app.include_router(timeline_router)
 app.include_router(routine_router)
 app.include_router(privacy_router)
+app.include_router(analysis_router)
+app.include_router(assistant_command_router)
+app.include_router(voice_command_router)
+app.include_router(image_command_router)
+app.include_router(report_command_router)
+
 
 @app.get("/")
 def root():

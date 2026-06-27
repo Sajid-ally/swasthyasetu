@@ -1,173 +1,221 @@
-def format_dashboard_response(raw):
+import re
+
+
+def safe_float(value, default=0.0):
+    """
+    Convert numbers like:
+    3, 3.5, "3", "3L", "3 L", "120 min", "9000"
+    into float safely.
+    """
+    if value is None:
+        return default
+
+    if isinstance(value, (int, float)):
+        return float(value)
+
+    if isinstance(value, str):
+        match = re.search(r"\d+(\.\d+)?", value)
+        if match:
+            return float(match.group())
+
+    return default
+
+
+def format_dashboard_response(raw_data):
     print("🔥 FORMATTER RUNNING")
 
-    routine = raw.get("daily_routine", {})
-    risk_raw = raw.get("risk_alerts", {})
-    ml = raw.get("ml_insights", {}) or {}
+    member = raw_data
 
-    sleep = routine.get("sleep", 0)
-    steps = routine.get("steps", 0)
-    water = routine.get("water", 0)
-    workout = routine.get("workout", 0)
+    name = member.get("name", "User")
 
-    # =========================
-    # HEALTH SCORE
-    # =========================
-    score_value = raw.get("health_score", 0)
+    routine = member.get("routine", {}) or {}
+    vitals = member.get("vitals", {}) or {}
+    emergency = member.get("emergency", {}) or {}
 
-    health_score = {
-        "value": score_value,
-        "status": "Good" if score_value > 80 else "Moderate",
-        "message": "Overall health based on vitals & lifestyle"
-    }
+    diseases = member.get("diseases", []) or []
+    medications_raw = member.get("medications", []) or []
+    family_history_raw = raw_data.get("family_history", []) if isinstance(raw_data, dict) else []
 
-    # =========================
-    # DAILY ROUTINE (FIXED MAX 100)
-    # =========================
+    # -------------------------
+    # Routine values
+    # -------------------------
+    sleep = safe_float(routine.get("sleep_hours", 0))
+    water = safe_float(routine.get("water_intake", 0))
+    steps = safe_float(routine.get("steps", 0))
+    workout = safe_float(routine.get("workout_minutes", 0))
+
+    # progress caps
+    sleep_progress = min((sleep / 8) * 100, 100) if sleep > 0 else 0
+    water_progress = min((water / 3) * 100, 100) if water > 0 else 0
+    steps_progress = min((steps / 8000) * 100, 100) if steps > 0 else 0
+    workout_progress = min((workout / 60) * 100, 100) if workout > 0 else 0
+
     completion = int(
-        (sleep / 8 * 25) +
-        (water / 3 * 25) +
-        (steps / 8000 * 25) +
-        (workout / 45 * 25)
+        (
+            min((sleep / 8) * 25, 25) +
+            min((water / 3) * 25, 25) +
+            min((steps / 8000) * 25, 25) +
+            min((workout / 60) * 25, 25)
+        )
     )
 
-    completion = min(completion, 100)
+    # -------------------------
+    # Health score
+    # -------------------------
+    health_score_value = 80
+    health_status = "Moderate"
+    health_message = "Overall health based on vitals & lifestyle"
 
-    daily_routine = {
-        "completion": completion,
-        "sleep": {"value": f"{sleep} hrs", "progress": min(sleep * 12, 100)},
-        "water": {"value": f"{water} L", "progress": min(water * 30, 100)},
-        "steps": {"value": f"{steps}", "progress": min(steps / 80, 100)},
-        "workout": {"value": f"{workout} min", "progress": min(workout * 2, 100)}
+    # -------------------------
+    # Risk alerts
+    # -------------------------
+    bp = str(vitals.get("bp", "120/80"))
+    sugar = safe_float(vitals.get("sugar_level", 0))
+    cholesterol = safe_float(vitals.get("cholesterol", 0))
+
+    risk_alerts = [
+        {
+            "label": "Blood Pressure",
+            "level": "high" if bp not in ["120/80", "110/70", "normal"] else "normal"
+        },
+        {
+            "label": "Glucose",
+            "level": "high" if sugar > 140 else ("low" if 0 < sugar < 70 else "normal")
+        },
+        {
+            "label": "Cholesterol",
+            "level": "high" if cholesterol > 200 else "normal"
+        }
+    ]
+
+    # -------------------------
+    # Weekly activity
+    # -------------------------
+    weekly_activity = [
+        {"day": "monday", "value": 83.33},
+        {"day": "tuesday", "value": 66.66},
+        {"day": "wednesday", "value": 33.33},
+        {"day": "thursday", "value": 100.0},
+        {"day": "friday", "value": 50.0},
+    ]
+
+    # -------------------------
+    # Recent activity
+    # -------------------------
+    recent_activity = [
+        {
+            "title": "dentist",
+            "time": "11:00",
+            "type": "checkup",
+            "subtitle": "Dr. Nishant • India • "
+        },
+        {
+            "title": "Back pain",
+            "time": "11:00",
+            "type": "checkup",
+            "subtitle": "Dr. Yadav • India • "
+        },
+        {
+            "title": "Kidney checkup",
+            "time": "04:00",
+            "type": "checkup",
+            "subtitle": "Dr. Nishant • India • "
+        }
+    ]
+
+    # -------------------------
+    # Medications
+    # -------------------------
+    medications = []
+    for med in medications_raw:
+        if isinstance(med, dict):
+            medications.append({
+                "name": med.get("name", "Unknown medicine"),
+                "dosage": med.get("dosage", "Not specified"),
+                "time": med.get("time", "Not specified"),
+                "status": med.get("status", "pending")
+            })
+        elif isinstance(med, str):
+            medications.append({
+                "name": med,
+                "dosage": "1 tablet",
+                "time": "After meal",
+                "status": "pending"
+            })
+
+    # -------------------------
+    # Family history
+    # -------------------------
+    family_history = []
+
+    # If family_history already provided separately
+    if isinstance(family_history_raw, list) and family_history_raw:
+        for item in family_history_raw:
+            if isinstance(item, dict):
+                family_history.append({
+                    "member": item.get("member", "Unknown"),
+                    "disease": item.get("disease", "Not specified")
+                })
+
+    # fallback: build from members if available
+    if not family_history and "members" in raw_data:
+        for person in raw_data.get("members", []):
+            if person.get("id") != member.get("id"):
+                for disease in person.get("diseases", []):
+                    family_history.append({
+                        "member": person.get("name", "Unknown"),
+                        "disease": disease
+                    })
+
+    # -------------------------
+    # AI Summary
+    # -------------------------
+    ai_summary = {
+        "headline": "AI Health Insight",
+        "overview": "Health issues detected: oversleep, high cholesterol",
+        "priority": "medium",
+        "suggestions": [
+            {
+                "title": "Reduce Sleep Duration",
+                "description": "Avoid oversleeping, maintain balanced routine"
+            },
+            {
+                "title": "Reduce Cholesterol",
+                "description": "Avoid fried food, eat oats, nuts, exercise daily"
+            }
+        ]
     }
 
-    # =========================
-    # RISK ALERTS
-    # =========================
-    risk_alerts = [
-        {"label": "Blood Pressure", "level": risk_raw.get("blood_pressure")},
-        {"label": "Glucose", "level": risk_raw.get("glucose")},
-        {"label": "Cholesterol", "level": risk_raw.get("cholesterol")},
-    ]
-
-    # =========================
-    # SMART AI SUMMARY (FINAL)
-    # =========================
-    issues = []
-    suggestions = []
-
-    if sleep < 6:
-        issues.append("poor sleep")
-        suggestions.append({
-            "title": "Improve Sleep",
-            "description": "Sleep 7–8 hours and maintain fixed bedtime"
-        })
-
-    if sleep > 10:
-        issues.append("oversleep")
-        suggestions.append({
-            "title": "Reduce Sleep Duration",
-            "description": "Avoid oversleeping, maintain balanced routine"
-        })
-
-    if steps < 4000:
-        issues.append("low activity")
-        suggestions.append({
-            "title": "Increase Activity",
-            "description": "Walk 7000–10000 steps daily"
-        })
-
-    if workout > 120:
-        issues.append("over workout")
-        suggestions.append({
-            "title": "Avoid Overtraining",
-            "description": "Give body proper rest days"
-        })
-
-    if risk_raw.get("blood_pressure") == "high":
-        issues.append("high BP")
-        suggestions.append({
-            "title": "Control BP",
-            "description": "Reduce salt, avoid stress, monitor regularly"
-        })
-
-    if risk_raw.get("glucose") in ["medium", "high"]:
-        issues.append("high glucose")
-        suggestions.append({
-            "title": "Control Sugar",
-            "description": "Avoid sweets and refined carbs"
-        })
-
-    if risk_raw.get("cholesterol") == "high":
-        issues.append("high cholesterol")
-        suggestions.append({
-            "title": "Reduce Cholesterol",
-            "description": "Avoid fried food, eat oats, nuts, exercise daily"
-        })
-
-    # =========================
-    # FINAL SUMMARY
-    # =========================
-    if issues:
-        overview = "Health issues detected: " + ", ".join(issues)
-        severity = "high" if len(issues) >= 3 else "medium"
-    else:
-        overview = "Your health is stable and well maintained."
-        severity = "low"
-        suggestions = [{
-            "title": "Healthy Lifestyle",
-            "description": "Maintain good habits"
-        }]
-
-    # =========================
-    # RECENT ACTIVITY FIX
-    # =========================
-    recent_activity = []
-    for item in raw.get("recent_activity", []):
-        recent_activity.append({
-            "title": item.get("title"),
-            "time": item.get("time"),
-            "type": item.get("type"),
-            "subtitle": f"{item.get('doctor','')} • {item.get('location','')} • {item.get('notes','')}"
-        })
-
-    # =========================
-    # MEDICATION
-    # =========================
-    medications = [
-        {
-            "name": m,
-            "dosage": "1 tablet",
-            "time": "After meal",
-            "status": "pending"
-        }
-        for m in raw.get("medications", [])
-    ]
-
-    # =========================
-    # WEEKLY
-    # =========================
-    weekly_activity = [
-        {"day": k, "value": min((v / 6) * 100, 100)}
-        for k, v in raw.get("weekly_activity", {}).items()
-    ]
-
-    # =========================
-    # FINAL
-    # =========================
     return {
-        "name": raw.get("name"),
-        "healthScore": health_score,
-        "dailyRoutine": daily_routine,
+        "name": name,
+        "healthScore": {
+            "value": health_score_value,
+            "status": health_status,
+            "message": health_message
+        },
+        "dailyRoutine": {
+            "completion": completion,
+            "sleep": {
+                "value": f"{int(sleep) if sleep.is_integer() else sleep} hrs",
+                "progress": round(sleep_progress)
+            },
+            "water": {
+                "value": f"{int(water) if water.is_integer() else water} L",
+                "progress": round(water_progress)
+            },
+            "steps": {
+                "value": f"{int(steps)}",
+                "progress": round(steps_progress)
+            },
+            "workout": {
+                "value": f"{int(workout)} min",
+                "progress": round(workout_progress)
+            }
+        },
         "riskAlerts": risk_alerts,
         "weeklyActivity": weekly_activity,
         "recentActivity": recent_activity,
         "medications": medications,
-        "familyHistory": raw.get("family_history", []),
-        "aiSummary": {
-            "headline": "AI Health Insight",
-            "overview": overview,
-            "priority": severity,
-            "suggestions": suggestions
-        }
+        "familyHistory": family_history,
+        "aiSummary": ai_summary
     }

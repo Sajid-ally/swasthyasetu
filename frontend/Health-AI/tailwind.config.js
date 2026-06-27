@@ -26,6 +26,8 @@ export default {
         floatSlow: "floatSlow 3s ease-in-out infinite",
         pulseSoft: "pulseSoft 2.5s ease-in-out infinite",
         fadeUp: "fadeUp 0.5s ease-out",
+        spinSlow: "spinSlow 10s linear infinite",
+        glowPulse: "glowPulse 2.4s ease-in-out infinite",
       },
       keyframes: {
         floatSlow: {
@@ -39,6 +41,20 @@ export default {
         fadeUp: {
           "0%": { opacity: "0", transform: "translateY(10px)" },
           "100%": { opacity: "1", transform: "translateY(0px)" },
+        },
+        spinSlow: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        glowPulse: {
+          "0%, 100%": {
+            opacity: "0.65",
+            transform: "scale(1)",
+          },
+          "50%": {
+            opacity: "1",
+            transform: "scale(1.05)",
+          },
         },
       },
     },

@@ -14,38 +14,80 @@ from app.utils.constants import (
 def extract_medication_data(text: str) -> dict:
     result = {}
 
+    if not isinstance(text, str):
+        return result
+
+    text = text.lower().strip()
+
+    # dosage like 500mg, 10 ml, 2g, 250mcg
     dosage_match = re.search(r"\b\d+\s?(mg|ml|g|mcg)\b", text)
     if dosage_match:
-        result["dosage"] = dosage_match.group()
+        result["dosage"] = dosage_match.group().replace(" ", "")
 
+    # timing like after dinner, before lunch, morning, night
     for timing in sorted(MEDICATION_TIMINGS, key=len, reverse=True):
         if timing in text:
             result["timing"] = timing
             break
 
-    medicine_match = re.search(
-        r"(take|taking|tablet|medicine|medication)\s+([a-zA-Z]+)",
-        text
-    )
-    if medicine_match:
-        result["medicine_name"] = medicine_match.group(2).lower()
-    else:
+    # optional frequency
+    for freq in sorted(FREQUENCY_WORDS, key=len, reverse=True):
+        if freq in text:
+            result["frequency"] = freq
+            break
+
+    # strong medicine extraction patterns
+    patterns = [
+        r"\b(?:take|taking|tablet|tablets|medicine|medication|capsule|capsules|syrup)\s+([a-zA-Z]+)\b",
+        r"\b([a-zA-Z]+)\s+\d+\s?(?:mg|ml|g|mcg)\b",
+    ]
+
+    for pattern in patterns:
+        medicine_match = re.search(pattern, text)
+        if medicine_match:
+            candidate = medicine_match.group(1).lower().strip()
+            if candidate and candidate not in MEDICATION_STOPWORDS:
+                if candidate not in {
+                    "after", "before", "dinner", "lunch", "breakfast",
+                    "morning", "evening", "night", "tablet", "tablets",
+                    "medicine", "medication", "capsule", "capsules", "syrup"
+                }:
+                    result["medicine_name"] = candidate
+                    break
+
+    # fallback word-based medicine detection
+    if "medicine_name" not in result:
         words = text.split()
+        skip_words = set(MEDICATION_STOPWORDS) | {
+            "i", "am", "is", "are", "was", "were",
+            "take", "taking", "tablet", "tablets",
+            "medicine", "medication", "capsule", "capsules", "syrup",
+            "after", "before", "dinner", "lunch", "breakfast",
+            "morning", "evening", "night", "my", "the", "a", "an"
+        }
+
         for word in words:
             clean_word = re.sub(r"[^a-zA-Z]", "", word).lower()
-            if clean_word and clean_word not in MEDICATION_STOPWORDS:
-                if clean_word not in {
-                    "after", "before", "dinner", "lunch", "breakfast",
-                    "morning", "evening", "night"
-                }:
-                    result["medicine_name"] = clean_word
-                    break
+            if not clean_word:
+                continue
+            if clean_word in skip_words:
+                continue
+            if len(clean_word) <= 2:
+                continue
+
+            result["medicine_name"] = clean_word
+            break
 
     return result
 
 
 def extract_family_history_data(text: str) -> dict:
     result = {}
+
+    if not isinstance(text, str):
+        return result
+
+    text = text.lower().strip()
 
     for relation in sorted(FAMILY_RELATIONS, key=len, reverse=True):
         pattern = rf"\b{re.escape(relation)}\b"
@@ -76,6 +118,11 @@ def extract_family_history_data(text: str) -> dict:
 def extract_routine_data(text: str) -> dict:
     result = {}
 
+    if not isinstance(text, str):
+        return result
+
+    text = text.lower().strip()
+
     # Strong normalized routine handling first
     if "poor sleep" in text or "not sleeping well" in text or "sleep issue" in text:
         result["activity"] = "poor sleep"
@@ -93,7 +140,6 @@ def extract_routine_data(text: str) -> dict:
             if ("drink" in text or "drinking" in text) and "water" in text:
                 result["activity"] = "drink water"
             elif detected_activity in ["walking", "walk"]:
-                # if sentence implies reduced walking, map to low activity
                 if any(phrase in text for phrase in ["little", "less", "low activity", "inactive", "kam"]):
                     result["activity"] = "low activity"
                 else:
@@ -133,6 +179,11 @@ def extract_routine_data(text: str) -> dict:
 def extract_symptom_data(text: str) -> dict:
     result = {}
 
+    if not isinstance(text, str):
+        return result
+
+    text = text.lower().strip()
+
     # Strong symptom handling first
     if "chest pain" in text or "chest discomfort" in text:
         result["symptom"] = "chest pain"
@@ -163,6 +214,11 @@ def extract_symptom_data(text: str) -> dict:
 def extract_condition_data(text: str) -> dict:
     result = {}
 
+    if not isinstance(text, str):
+        return result
+
+    text = text.lower().strip()
+
     # Strong normalized condition detection first
     if "high bp" in text or "bp" in text or "blood pressure" in text or "hypertension" in text:
         result["condition"] = "high bp"
@@ -184,8 +240,18 @@ def extract_condition_data(text: str) -> dict:
 def extract_unknown_data(text: str) -> dict:
     """
     Smarter fallback:
-    Even if routing fails, still try symptom / condition / routine / family extraction.
+    Even if routing fails, still try medication / symptom / condition / routine / family extraction.
     """
+
+    if not isinstance(text, str):
+        return {"raw_text": ""}
+
+    text = text.lower().strip()
+
+    # Try medication first
+    medication_result = extract_medication_data(text)
+    if medication_result:
+        return medication_result
 
     # Try symptom
     symptom_result = extract_symptom_data(text)

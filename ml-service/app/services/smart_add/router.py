@@ -11,6 +11,35 @@ def route_text(text: str) -> HealthCategory:
 
     text = text.lower().strip()
 
+    medication_keywords = [
+        "take",
+        "taking",
+        "tablet",
+        "tablets",
+        "medicine",
+        "medication",
+        "capsule",
+        "capsules",
+        "syrup",
+        "dose",
+        "dosage",
+        "mg",
+        "ml",
+        "paracetamol",
+        "ibuprofen",
+        "aspirin",
+        "metformin",
+        "after dinner",
+        "before dinner",
+        "after lunch",
+        "before lunch",
+        "after breakfast",
+        "before breakfast",
+        "morning",
+        "evening",
+        "night",
+    ]
+
     family_keywords = [
         "family history",
         "father",
@@ -57,6 +86,10 @@ def route_text(text: str) -> HealthCategory:
     for keyword in family_keywords:
         if keyword in text:
             return HealthCategory.FAMILY_HISTORY
+
+    for keyword in medication_keywords:
+        if keyword in text:
+            return HealthCategory.MEDICATION
 
     for keyword in symptom_keywords:
         if keyword in text:
